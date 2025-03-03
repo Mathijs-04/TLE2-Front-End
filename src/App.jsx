@@ -7,6 +7,7 @@ function App() {
     return (
         <>
             <p>Gebarentaal Web-applicatie</p>
+            <p>Yiming heeft een boek</p>
         </>
     )
 }
