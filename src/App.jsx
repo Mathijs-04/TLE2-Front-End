@@ -1,14 +1,23 @@
-import {useState} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import Layout from "./Layout.jsx";
+import Home from "./Home.jsx";
+import Page1 from "./Page1.jsx";
+import Page2 from "./Page2.jsx";
+import Page3 from "./Page3.jsx";
 
 function App() {
-
     return (
-        <>
-            <p>Gebarentaal Web-applicatie</p>
-        </>
-    )
+        <Router>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="page1" element={<Page1 />} />
+                    <Route path="page2" element={<Page2 />} />
+                    <Route path="page3" element={<Page3 />} />
+                </Route>
+            </Routes>
+        </Router>
+    );
 }
 
-export default App
+export default App;
