@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router";
 
-function Layout() {
+function Navigation() {
     return (
         <>
             <nav className="flex space-x-4">
@@ -15,4 +15,4 @@ function Layout() {
     );
 }
 
-export default Layout;
+export default Navigation;
