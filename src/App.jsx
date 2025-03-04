@@ -1,5 +1,4 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router';
-import Layout from "./components/Navigation.jsx";
 import Home from "./Home.jsx";
 import Theorie from "./Theorie.jsx";
 import Oefenen from "./Oefenen.jsx";
