@@ -1,9 +1,9 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router';
-import Layout from "./Navigation.jsx";
+import Layout from "./components/Navigation.jsx";
 import Home from "./Home.jsx";
 import Theorie from "./Theorie.jsx";
 import Oefenen from "./Oefenen.jsx";
-import Navigation from "./Navigation.jsx";
+import Navigation from "./components/Navigation.jsx";
 
 function App() {
     return (
