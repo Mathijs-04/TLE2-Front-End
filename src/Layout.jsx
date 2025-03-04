@@ -5,8 +5,8 @@ function Layout() {
         <>
             <nav className="flex space-x-4">
                 <NavLink to="/" className={({isActive}) => isActive ? "underline" : undefined}>Home</NavLink>
-                <NavLink to="/page1" className={({isActive}) => isActive ? "underline" : undefined}>Page 1</NavLink>
-                <NavLink to="/page2" className={({isActive}) => isActive ? "underline" : undefined}>Page 2</NavLink>
+                <NavLink to="/theorie" className={({isActive}) => isActive ? "underline" : undefined}>Theorie</NavLink>
+                <NavLink to="/oefenen" className={({isActive}) => isActive ? "underline" : undefined}>Oefenen</NavLink>
             </nav>
             <main>
                 <Outlet/>
