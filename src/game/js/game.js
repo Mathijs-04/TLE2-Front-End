@@ -24,7 +24,7 @@ export class Game extends Engine {
         // Create snail actor
         const snail = new Actor();
         snail.graphics.use(Resources.Snail.toSprite());
-        snail.pos = new Vector(-100, 180);
+        snail.pos = new Vector(-120, 180);
         snail.vel = new Vector(0, 0); // Initially no velocity
         this.add(snail);
 
