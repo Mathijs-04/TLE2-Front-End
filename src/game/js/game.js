@@ -1,3 +1,5 @@
+// Make sure that any updates in the canvas do not use react state or props.
+
 import '../css/style.css';
 import { Actor, Engine, Vector, DisplayMode, Color } from 'excalibur';
 import { Resources, ResourceLoader } from './resources.js';
