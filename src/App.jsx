@@ -4,6 +4,7 @@ import Theorie from "./Theorie.jsx";
 import Oefenen from "./Oefenen.jsx";
 import Navigation from "./components/Navigation.jsx";
 import Header from "./components/Header.jsx";
+import GameComponent from "./game/Game.jsx";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="theorie" element={<Theorie />} />
                     <Route path="oefenen" element={<Oefenen />} />
+                    <Route path="game" element={<GameComponent />} />
                 </Route>
             </Routes>
         </Router>

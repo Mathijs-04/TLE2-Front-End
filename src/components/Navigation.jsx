@@ -7,6 +7,7 @@ function Navigation() {
                 <NavLink to="/" className={({isActive}) => isActive ? "underline" : undefined}>Home</NavLink>
                 <NavLink to="/theorie" className={({isActive}) => isActive ? "underline" : undefined}>Theorie</NavLink>
                 <NavLink to="/oefenen" className={({isActive}) => isActive ? "underline" : undefined}>Oefenen</NavLink>
+                <NavLink to="/game" className={({isActive}) => isActive ? "underline" : undefined}>Game</NavLink>
             </nav>
             <main>
                 <Outlet/>
