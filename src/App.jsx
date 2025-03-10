@@ -1,24 +1,39 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import {BrowserRouter as Router, Routes, Route, createBrowserRouter, RouterProvider} from 'react-router';
 import Home from "./Home.jsx";
-import Theorie from "./Theorie.jsx";
-import Oefenen from "./Oefenen.jsx";
-import Navigation from "./components/Navigation.jsx";
-import Header from "./components/Header.jsx";
+import Alphabet from "./Alphabet.jsx";
+import Information from "./Information.jsx";
+import Profile from "./Profile.jsx";
 import GameComponent from "./game/Game.jsx";
 
 function App() {
+    const router = createBrowserRouter([
+        {
+            children:[
+                {
+                    path: '/',
+                    element: <Home/>
+                },
+                {
+                    path: '/alphabet',
+                    element: <Alphabet/>
+                },
+                {
+                    path: '/informatie',
+                    element: <Information/>
+                },
+                {
+                    path: '/Game',
+                    element: <GameComponent/>
+                },
+                {
+                    path: '/profile',
+                    element: <Profile/>
+                },
+            ]
+        }
+    ])
     return (
-        <Router>
-            <Header />
-            <Routes>
-                <Route path="/" element={<Navigation />}>
-                    <Route index element={<Home />} />
-                    <Route path="theorie" element={<Theorie />} />
-                    <Route path="oefenen" element={<Oefenen />} />
-                    <Route path="game" element={<GameComponent />} />
-                </Route>
-            </Routes>
-        </Router>
+        <RouterProvider router={router}/>
     );
 }
 
