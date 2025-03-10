@@ -3,10 +3,11 @@ import { NavLink, Outlet } from "react-router";
 function Navigation() {
     return (
         <>
-            <nav className="fixed bottom-3 left-4 right-4 bg-gray-800 text-white text-center p-4 flex justify-around rounded-2xl">
-                <NavLink to="/" className={({isActive}) => isActive ? "underline" : undefined}> <img alt={"Theorie"}/>  </NavLink>
-                <NavLink to="/theorie" className={({isActive}) => isActive ? "underline" : undefined}> <img alt={"Home"}/> </NavLink>
-                <NavLink to="/oefenen" className={({isActive}) => isActive ? "underline" : undefined}> <img alt={"Oefeningen"}/> </NavLink>
+            <nav className="flex space-x-4">
+                <NavLink to="/" className={({isActive}) => isActive ? "underline" : undefined}>Home</NavLink>
+                <NavLink to="/theorie" className={({isActive}) => isActive ? "underline" : undefined}>Theorie</NavLink>
+                <NavLink to="/oefenen" className={({isActive}) => isActive ? "underline" : undefined}>Oefenen</NavLink>
+                <NavLink to="/game" className={({isActive}) => isActive ? "underline" : undefined}>Game</NavLink>
             </nav>
             <main>
                 <Outlet/>
