@@ -1,13 +1,15 @@
-import { NavLink, Outlet } from "react-router";
+import {Link, NavLink, Outlet} from "react-router";
 
 function Navigation() {
     return (
         <>
             <nav className="flex space-x-4">
-                <NavLink to="/" className={({isActive}) => isActive ? "underline" : undefined}>Home</NavLink>
-                <NavLink to="/theorie" className={({isActive}) => isActive ? "underline" : undefined}>Theorie</NavLink>
-                <NavLink to="/oefenen" className={({isActive}) => isActive ? "underline" : undefined}>Oefenen</NavLink>
-                <NavLink to="/game" className={({isActive}) => isActive ? "underline" : undefined}>Game</NavLink>
+                <Link to={"/"} >Home</Link>
+                <Link to={"/informatie"}>Informatie</Link>
+                <Link to={"/alphabet"}>Alphabet</Link>
+                <Link to={"/game"}>Game</Link>
+                <Link to={"/profile"}>Profile</Link>
+
             </nav>
             <main>
                 <Outlet/>

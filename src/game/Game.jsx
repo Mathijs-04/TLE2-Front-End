@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Game } from './js/game';
+import Navigation from "../components/Navigation.jsx";
 
 function GameComponent() {
     const canvasRef = useRef(null);
@@ -14,27 +15,31 @@ function GameComponent() {
     }, []);
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                height: '100vh',
-                paddingTop: '5vh',
-                gap: '1rem'
-            }}
-        >
-            <canvas
-                ref={canvasRef}
-                width={900}
-                height={500}
+        <>
+            <Navigation/>
+            <div
                 style={{
-                    border: '2px solid #000',
-                    backgroundColor: '#000'
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    height: '100vh',
+                    paddingTop: '5vh',
+                    gap: '1rem'
                 }}
-            />
-        </div>
+            >
+                <canvas
+                    ref={canvasRef}
+                    width={900}
+                    height={500}
+                    style={{
+                        border: '2px solid #000',
+                        backgroundColor: '#000'
+                    }}
+                />
+            </div>
+        </>
+
     );
 }
 

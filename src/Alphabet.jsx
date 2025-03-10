@@ -1,12 +1,12 @@
 import Navigation from "./components/Navigation.jsx";
 
-function Home() {
+function Alphabet() {
     return (
         <>
             <Navigation/>
-            <p>Homepage</p>
+            <p>Theorie</p>
         </>
     );
 }
 
-export default Home;
+export default Alphabet;

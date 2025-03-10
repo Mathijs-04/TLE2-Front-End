@@ -1,12 +1,11 @@
 import Navigation from "./components/Navigation.jsx";
 
-function Home() {
+function Profile() {
     return (
         <>
             <Navigation/>
-            <p>Homepage</p>
+            <p>Profile</p>
         </>
     );
 }
-
-export default Home;
+export default Profile;
