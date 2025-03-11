@@ -193,6 +193,6 @@ export class Game extends Engine {
             if (this.onGameEnd) {
                 this.onGameEnd();
             }
-        }, 2000);
+        }, 1);
     }
 }
