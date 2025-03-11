@@ -1,4 +1,5 @@
 import Navigation from "./components/Navigation.jsx";
+import {Link} from "react-router";
 
 function Home() {
     return (
@@ -10,10 +11,12 @@ function Home() {
 
                 <div className="flex items-center gap-8">
                     <img className="h-14" src="/public/images/info.png" alt="Info"/>
+                    <Link to={"/game"}>
                     <button
                         className="bg-Yellow w-80 text-Navy text-3xl font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
                         Start!
                     </button>
+                    </Link>
                 </div>
 
                 <div className="absolute top-40 right-10 bg-Navy text-white p-6 rounded-xl shadow-lg w-64">
