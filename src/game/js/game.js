@@ -3,7 +3,7 @@ import { Actor, Engine, Vector, DisplayMode, Color, Label, Font, TextAlign } fro
 import { Resources, ResourceLoader } from './resources.js';
 
 export class Game extends Engine {
-    constructor(canvasElement, difficulty) {
+    constructor(canvasElement, difficulty, onGameEnd) {
         super({
             canvasElement: canvasElement,
             displayMode: DisplayMode.Fixed,
@@ -14,6 +14,7 @@ export class Game extends Engine {
         });
 
         this.difficulty = difficulty;
+        this.onGameEnd = onGameEnd;
         this.start(ResourceLoader).then(() => {
             this.startGame();
         });
@@ -96,6 +97,15 @@ export class Game extends Engine {
         this.startNewTimer();
 
         this.keyDownHandler = (evt) => {
+            if (evt.key === 'Enter') {
+                if (this.lettersQueue.length > 1) {
+                    this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
+                    this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+                    snail.pos.x += 55 * 25;
+                }
+                return;
+            }
+
             if (!this.inputEnabled || this.lettersQueue.length === 0) return;
 
             const pressedKey = evt.key.toLowerCase();
@@ -168,8 +178,8 @@ export class Game extends Engine {
         this.explanationLabel.kill();
 
         const endLabel = new Label({
-            text: 'Game ended',
-            pos: new Vector(480, 360),
+            text: 'Game Ended',
+            pos: new Vector(460, 300),
             font: new Font({
                 size: 64,
                 family: 'Arial',
@@ -178,5 +188,11 @@ export class Game extends Engine {
             textAlign: TextAlign.Center
         });
         this.add(endLabel);
+
+        setTimeout(() => {
+            if (this.onGameEnd) {
+                this.onGameEnd();
+            }
+        }, 2000);
     }
 }
