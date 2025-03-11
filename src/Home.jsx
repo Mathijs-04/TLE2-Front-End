@@ -1,7 +1,30 @@
 import Navigation from "./components/Navigation.jsx";
 import {Link} from "react-router";
+import {useEffect, useState} from "react";
 
 function Home() {
+    // const [leaderboard, setLeaderboard] = useState([])
+    // //leaderboard is een array van objecten met de volgende properties: id, name, time
+    //
+    // useEffect(() => {
+    //     const fetchLeaderboard = async () => {
+    //         try {
+    //             const response = await fetch(``, {
+    //                 method: "GET",
+    //                 headers: {
+    //                     'Accept': 'application/json'
+    //                 }
+    //             })
+    //             const data = await response.json()
+    //             console.log(data)
+    //             setLeaderboard(data.items)
+    //         } catch (error) {
+    //             console.error("Error in fetching Leaderboard", error)
+    //         }
+    //     }
+    //     fetchLeaderboard();
+    // }, []);
+
     return (
         <>
             <Navigation/>
@@ -12,10 +35,10 @@ function Home() {
                 <div className="flex items-center gap-8">
                     <img className="h-14" src="/public/images/info.png" alt="Info"/>
                     <Link to={"/game"}>
-                    <button
-                        className="bg-Yellow w-80 text-Navy text-3xl font-nunito font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
-                        Start!
-                    </button>
+                        <button
+                            className="bg-Yellow w-80 text-Navy text-3xl font-nunito font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
+                            Start!
+                        </button>
                     </Link>
                 </div>
 
