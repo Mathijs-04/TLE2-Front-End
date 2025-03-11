@@ -67,7 +67,7 @@ export class Game extends Engine {
         this.add(this.scoreLabel);
 
         this.difficultyLabel = new Label({
-            text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
+            text: `Niveau: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
             pos: new Vector(50, 650),
             font: new Font({
                 size: 32,
@@ -193,6 +193,6 @@ export class Game extends Engine {
             if (this.onGameEnd) {
                 this.onGameEnd();
             }
-        }, 2000);
+        }, 1);
     }
 }
