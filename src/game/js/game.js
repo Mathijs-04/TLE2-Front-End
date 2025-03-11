@@ -20,21 +20,10 @@ export class Game extends Engine {
     }
 
     startGame() {
-        const difficultyLabel = new Label({
-            text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
-            pos: new Vector(320, 200),
-            font: new Font({
-                size: 24,
-                family: 'Arial',
-                color: Color.White
-            }),
-            textAlign: TextAlign.Center
-        });
-        this.add(difficultyLabel);
-
         const snail = new Actor();
         snail.graphics.use(Resources.Snail.toSprite());
-        snail.pos = new Vector(-120, 180);
+        snail.pos = new Vector(-120, 360);
+        snail.scale = new Vector(1.4, 1.4);
         this.add(snail);
 
         this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -42,9 +31,9 @@ export class Game extends Engine {
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(300, 40),
+            pos: new Vector(620, 100),
             font: new Font({
-                size: 32,
+                size: 64,
                 family: 'Arial',
                 color: Color.White
             }),
@@ -54,33 +43,45 @@ export class Game extends Engine {
 
         this.timerLabel = new Label({
             text: 'Time: 3',
-            pos: new Vector(250, 80),
+            pos: new Vector(50, 20),
             font: new Font({
-                size: 24,
+                size: 32,
                 family: 'Arial',
                 color: Color.White
             }),
-            textAlign: TextAlign.Center
+            textAlign: TextAlign.Left
         });
         this.add(this.timerLabel);
 
         this.scoreLabel = new Label({
             text: '',
-            pos: new Vector(250, 120),
+            pos: new Vector(50, 60),
             font: new Font({
-                size: 24,
+                size: 32,
                 family: 'Arial',
                 color: Color.White
             }),
-            textAlign: TextAlign.Center
+            textAlign: TextAlign.Left
         });
         this.add(this.scoreLabel);
 
+        this.difficultyLabel = new Label({
+            text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
+            pos: new Vector(50, 650),
+            font: new Font({
+                size: 32,
+                family: 'Arial',
+                color: Color.White
+            }),
+            textAlign: TextAlign.Left
+        });
+        this.add(this.difficultyLabel);
+
         this.explanationLabel = new Label({
             text: '',
-            pos: new Vector(250, 160),
+            pos: new Vector(480, 580),
             font: new Font({
-                size: 20,
+                size: 32,
                 family: 'Arial',
                 color: Color.Red
             }),
@@ -103,10 +104,7 @@ export class Game extends Engine {
                 this.scoreLabel.text = `Score: ${score}%`;
 
                 if (score >= 60) {
-                    let moveDistance = 28;
-                    if (score > 80) moveDistance += 10;
-                    snail.pos.x += moveDistance;
-
+                    snail.pos.x += 55;
                     this.lettersQueue.shift();
                     this.explanationLabel.text = '';
 
@@ -117,14 +115,11 @@ export class Game extends Engine {
                         this.startNewTimer();
                     }
                 } else {
-                    this.explanationLabel.text = 'Try again, feedback placeholder';
+                    this.explanationLabel.text = 'Feedback Placeholder';
                     this.startNewTimer();
                 }
 
                 this.inputEnabled = false;
-            } else {
-                this.scoreLabel.text = 'Wrong letter!';
-                this.explanationLabel.text = 'Press the correct letter shown above.';
             }
         };
 
@@ -169,13 +164,14 @@ export class Game extends Engine {
         this.currentLetter.kill();
         this.timerLabel.kill();
         this.scoreLabel.kill();
+        this.difficultyLabel.kill();
         this.explanationLabel.kill();
 
         const endLabel = new Label({
-            text: 'You Win!',
-            pos: new Vector(250, 180),
+            text: 'Game ended',
+            pos: new Vector(480, 360),
             font: new Font({
-                size: 48,
+                size: 64,
                 family: 'Arial',
                 color: Color.White
             }),
