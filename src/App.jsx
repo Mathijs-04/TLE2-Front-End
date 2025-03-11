@@ -4,7 +4,7 @@ import Alphabet from "./Alphabet.jsx";
 import Information from "./Information.jsx";
 import Profile from "./Profile.jsx";
 import GameComponent from "./game/Game.jsx";
-import {useState} from "react";
+import RedirectHRLogin from "./components/RedirectHRLogin.jsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -26,6 +26,9 @@ function App() {
                     path: '/profile',
                     element: <Profile/>
                 },
+                {path: '/login',
+                    element: <RedirectHRLogin/>
+                }
             ]
         }
     ])
