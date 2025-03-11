@@ -96,7 +96,7 @@ function GameComponent() {
                             <button
                                 onClick={returnToMenu}
                                 className="bg-Yellow w-80 text-Navy text-2xl font-nunito font-bold px-8 py-4 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
-                                Ander level
+                                Ander niveau
                             </button>
                         </div>
                     </div>
