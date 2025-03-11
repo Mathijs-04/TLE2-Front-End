@@ -18,6 +18,11 @@ export default {
         Red: '#D23E4D', //red
 
       },
+      fontFamily: {
+        merriweather: ['Merriweather', 'serif'],
+        nunito: ['Nunito', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
+      },
     },
   },
   plugins: [],
