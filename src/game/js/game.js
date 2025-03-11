@@ -3,22 +3,35 @@ import { Actor, Engine, Vector, DisplayMode, Color, Label, Font, TextAlign } fro
 import { Resources, ResourceLoader } from './resources.js';
 
 export class Game extends Engine {
-    constructor(canvasElement) {
+    constructor(canvasElement, difficulty) {
         super({
             canvasElement: canvasElement,
             displayMode: DisplayMode.Fixed,
-            width: 640,
-            height: 360,
+            width: 1280,
+            height: 720,
             backgroundColor: Color.Black,
             suppressPlayButton: true
         });
 
+        this.difficulty = difficulty;
         this.start(ResourceLoader).then(() => {
             this.startGame();
         });
     }
 
     startGame() {
+        const difficultyLabel = new Label({
+            text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
+            pos: new Vector(320, 200),
+            font: new Font({
+                size: 24,
+                family: 'Arial',
+                color: Color.White
+            }),
+            textAlign: TextAlign.Center
+        });
+        this.add(difficultyLabel);
+
         const snail = new Actor();
         snail.graphics.use(Resources.Snail.toSprite());
         snail.pos = new Vector(-120, 180);
