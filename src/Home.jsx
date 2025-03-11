@@ -3,7 +3,7 @@ import Navigation from "./components/Navigation.jsx";
 function Home() {
     return (
         <>
-            <Navigation/>
+            <Navigation />
             <p>Homepage</p>
         </>
     );

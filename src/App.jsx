@@ -14,7 +14,7 @@ function App() {
                     element: <Home/>
                 },
                 {
-                    path: '/alphabet',
+                    path: '/alfabet',
                     element: <Alphabet/>
                 },
                 {
