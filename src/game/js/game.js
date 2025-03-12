@@ -48,19 +48,19 @@ export class Game extends Engine {
 
 
         this.difficultyCheck()
-
-        const snail = new Actor();
-        snail.graphics.use(Resources.Snail.toSprite());
-        snail.pos = new Vector(-120, 310);
-        snail.scale = new Vector(1, 1);
-        this.add(snail);
+        //
+        // const snail = new Actor();
+        // snail.graphics.use(Resources.Snail.toSprite());
+        // snail.pos = new Vector(-120, 10);
+        // snail.scale = new Vector(1, 1);
+        // this.add(snail);
 
 
         console.log("Starting game...");
         this.snail = new Actor();
         this.snail.graphics.use(Resources.Snail.toSprite());
-        this.snail.pos = new Vector(-120, 360);
-        this.snail.scale = new Vector(1.4, 1.4);
+        this.snail.pos = new Vector(-120, 300);
+        this.snail.scale = new Vector(1, 1);
         this.add(this.snail);
 
         this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -68,7 +68,7 @@ export class Game extends Engine {
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(620, 100),
+            pos: new Vector(620, 550),
             font: new Font({ size: 64, family: 'Arial', color: Color.White }),
             textAlign: TextAlign.Center
         });
