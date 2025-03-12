@@ -33,7 +33,7 @@ function Home() {
                 <h1 className="text-Navy font-nunito font-extrabold text-6xl mt-28 mb-14">Gebaren Game</h1>
 
                 <div className="flex items-center gap-8">
-                    <img className="h-14" src="/public/images/info.png" alt="Info"/>
+                    <img className="h-14" src="/images/info.png" alt="Info"/>
                     <Link to={"/game"}>
                         <button
                             className="bg-Yellow w-80 text-Navy text-3xl font-nunito font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
