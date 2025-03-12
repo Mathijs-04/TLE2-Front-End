@@ -1,6 +1,6 @@
 import Navigation from "./components/Navigation.jsx";
 import {Link} from "react-router";
-import {useEffect, useState} from "react";
+// import {useEffect, useState} from "react";
 
 function Home() {
     // const [recent, setRecent] = useState([])
