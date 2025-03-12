@@ -9,9 +9,11 @@ export class Game extends Engine {
             displayMode: DisplayMode.Fixed,
             width: 1280,
             height: 720,
-            backgroundColor: Color.Black,
+            // backgroundColor: Color.Black,
             suppressPlayButton: true
+
         });
+
 
         this.difficulty = difficulty;
         this.onGameEnd = onGameEnd;
@@ -21,10 +23,23 @@ export class Game extends Engine {
     }
 
     startGame() {
+
+        const background = new Actor({
+            x: 640,
+            y: 360 ,
+            anchor: new Vector(0.5, 0.5)
+        });
+
+        background.graphics.use(Resources.BgEasy.toSprite());
+        this.add(background);
+        console.log('bg loaded')
+
+
+
         const snail = new Actor();
         snail.graphics.use(Resources.Snail.toSprite());
-        snail.pos = new Vector(-120, 360);
-        snail.scale = new Vector(1.4, 1.4);
+        snail.pos = new Vector(-120, 310);
+        snail.scale = new Vector(1, 1);
         this.add(snail);
 
         this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -32,7 +47,7 @@ export class Game extends Engine {
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(620, 100),
+            pos: new Vector(620, 530),
             font: new Font({
                 size: 64,
                 family: 'Arial',
@@ -142,7 +157,7 @@ export class Game extends Engine {
             this.timerId = null;
         }
 
-        this.countdown = 3;
+        this.countdown = 0;
         this.timerLabel.text = `Time: ${this.countdown}`;
         this.inputEnabled = false;
 
