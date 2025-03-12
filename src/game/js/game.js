@@ -72,6 +72,20 @@ export class Game extends Engine {
         this.inputEnabled = false;
         this.countdown = 0;
         this.timerId = null;
+
+        this.keyDownHandler = (evt) => {
+            if (evt.key === 'Enter') {
+                if (this.lettersQueue.length > 1) {
+                    this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
+                    this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+                    this.snail.pos.x += 55 * 25;
+                    console.log("Skipped to the last letter.");
+                }
+                return;
+            }
+        };
+
+        window.addEventListener('keydown', this.keyDownHandler);
         this.startNewTimer();
     }
 
@@ -136,6 +150,7 @@ export class Game extends Engine {
 
     endGame(snail) {
         console.log("Game ended.");
+        window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
         this.timerLabel.kill();
@@ -153,6 +168,6 @@ export class Game extends Engine {
 
         setTimeout(() => {
             if (this.onGameEnd) this.onGameEnd();
-        }, 2000);
+        }, 1);
     }
 }
