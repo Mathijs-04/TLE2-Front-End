@@ -19,14 +19,14 @@ function App() {
                     element: <Alphabet/>
                 },
                 {
-                    path: '/Game',
+                    path: '/game',
                     element: <GameComponent/>
                 },
                 {
                     path: '/profile',
                     element: <Profile/>
                 },
-                {path: '/login',
+                {path: "/login",
                     element: <RedirectHRLogin/>
                 }
             ]
