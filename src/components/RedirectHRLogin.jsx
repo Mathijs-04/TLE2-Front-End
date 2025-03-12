@@ -1,4 +1,4 @@
-import {useNavigate, useParams, useSearchParams} from "react-router";
+import {useNavigate, useSearchParams} from "react-router";
 import {useEffect} from "react";
 
 function RedirectHRLogin() {

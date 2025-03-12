@@ -1,7 +1,6 @@
 import Navigation from "./components/Navigation.jsx";
 import {Link, useLocation, useNavigate} from "react-router";
-import {useEffect, useState} from "react";
-import {Link} from "react-router";
+import {useEffect} from "react";
 // import {useEffect, useState} from "react";
 
 function Home() {
@@ -13,7 +12,7 @@ function Home() {
         const currentUrl = location.pathname;
         if (token === null) {
             localStorage.setItem("redirectUrl", currentUrl);
-            window.location.href = 'https://cmgt.hr.nl/chat-login/handle/%7Bapplication%7D?redirect=http://localhost:5173/login';
+            window.location.href = 'https://cmgt.hr.nl/chat-login/handle/%7Bapplication%7D?redirect=http://localhost:5174/login';
         }
     }, [navigate]);
 
