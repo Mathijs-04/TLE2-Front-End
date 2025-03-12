@@ -11,9 +11,7 @@ export class Game extends Engine {
             height: 720,
             // backgroundColor: Color.Black,
             suppressPlayButton: true
-
         });
-
 
         this.difficulty = difficulty;
         this.onGameEnd = onGameEnd;
@@ -121,52 +119,52 @@ export class Game extends Engine {
         this.countdown = 0;
         this.timerId = null;
 
-        this.startNewTimer();
-
         this.keyDownHandler = (evt) => {
             if (evt.key === 'Enter') {
                 if (this.lettersQueue.length > 1) {
                     this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
                     this.currentLetter.text = this.lettersQueue[0].toUpperCase();
-                    snail.pos.x += 55 * 25;
+                    this.snail.pos.x += 55 * 25;
+                    console.log("Skipped to the last letter.");
                 }
                 return;
-            }
-
-            if (!this.inputEnabled || this.lettersQueue.length === 0) return;
-
-            const pressedKey = evt.key.toLowerCase();
-            if (pressedKey === this.lettersQueue[0]) {
-                const score = Math.floor(Math.random() * 61) + 40;
-                this.scoreLabel.text = `Score: ${score}%`;
-
-                if (score >= 60) {
-                    snail.pos.x += 55;
-                    this.lettersQueue.shift();
-                    this.explanationLabel.text = '';
-
-                    if (this.lettersQueue.length === 0) {
-                        this.endGame(snail);
-                    } else {
-                        this.currentLetter.text = this.lettersQueue[0].toUpperCase();
-                        this.startNewTimer();
-                    }
-                } else {
-                    this.explanationLabel.text = 'Feedback Placeholder';
-                    this.startNewTimer();
-                }
-
-                this.inputEnabled = false;
             }
         };
 
         window.addEventListener('keydown', this.keyDownHandler);
+        this.startNewTimer();
     }
 
+    handleGestureDetection(result) {
+        if (!this.inputEnabled || !result || result.length === 0) {
+            console.log("Input not enabled or no result.");
+            return;
+        }
 
+        const targetChar = this.lettersQueue[0];
+        console.log(`Expected letter: ${targetChar}, Detected letters:`, result);
 
+        const detectedLetters = result.map(([letter]) => letter);
+        if (detectedLetters.includes(targetChar)) {
+            console.log(`Correct letter detected: ${targetChar}`);
+            this.snail.pos.x += 55;
+            this.lettersQueue.shift();
 
+            if (this.lettersQueue.length === 0) {
+                this.endGame(this.snail);
+            } else {
+                this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+                this.startNewTimer();
+            }
+            this.explanationLabel.text = '';
+        } else {
+            console.log(`Incorrect letter. Expected: ${targetChar}`);
+            this.explanationLabel.text = `Wrong letter! Expected ${targetChar.toUpperCase()}`;
+            this.startNewTimer();
+        }
 
+        this.inputEnabled = false;
+    }
 
     startNewTimer() {
         if (this.timerId) {
@@ -201,6 +199,7 @@ export class Game extends Engine {
     }
 
     endGame(snail) {
+        console.log("Game ended.");
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
@@ -222,9 +221,7 @@ export class Game extends Engine {
         this.add(endLabel);
 
         setTimeout(() => {
-            if (this.onGameEnd) {
-                this.onGameEnd();
-            }
+            if (this.onGameEnd) this.onGameEnd();
         }, 1);
     }
 }
