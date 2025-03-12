@@ -11,7 +11,7 @@ export default {
         IceBlue: '#A6BDE7', // Nav and component bg
         Navy: '#001344', // Titles and text
         RoyalBlue: '#0C1C8C', //text
-        SlateBlue: '#274277', //components
+          SlateBlue: '#274277', //components
         Yellow: '#FFB41F', //primary button
         DuskBlue: '#58719F', //tertiare button
         Sage: '#97A78F', //green
