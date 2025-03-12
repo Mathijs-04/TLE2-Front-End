@@ -46,13 +46,13 @@ function GameComponent() {
         }
     }, [gameStarted, difficulty, gameEnded]);
 
-    useEffect(() => {
-        if (gameStarted) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-    }, [gameStarted]);
+    // useEffect(() => {
+    //     if (gameStarted) {
+    //         document.body.style.overflow = 'hidden';
+    //     } else {
+    //         document.body.style.overflow = 'auto';
+    //     }
+    // }, [gameStarted]);
 
     return (
         <>

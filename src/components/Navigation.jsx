@@ -10,13 +10,13 @@ function Navigation() {
                             to={"/"}
                             className={({isActive}) =>
                                 `w-11 h-11 p-1 ${isActive ? 'shadow-md shadow-gray-500 border rounded' : ''}`}>
-                            <img src="/public/images/home.png" alt={"Link naar Home"}/>
+                            <img src="/images/home.png" alt={"Link naar Home"}/>
                         </NavLink>
                         <NavLink
                             to={"/alfabet"}
                             className={({isActive}) =>
                                 `w-11 h-11 p-1 ${isActive ? 'shadow-md shadow-gray-500 border rounded' : ''}`}>
-                            <img src="/public/images/abc-block.png" alt={"Link naar Het alfabet"}
+                            <img src="/images/abc-block.png" alt={"Link naar Het alfabet"}
                                  className="w-full h-full"/>
                         </NavLink>
                     </div>
@@ -24,7 +24,7 @@ function Navigation() {
                         to={"/profile"}
                         className={({isActive}) =>
                             `w-12 h-12 p-1 ${isActive ? 'shadow-md shadow-gray-500 border rounded' : ''}`}>
-                        <img src="/public/images/user.png" alt={"Link naar jouw profiel"}/>
+                        <img src="/images/user.png" alt={"Link naar jouw profiel"}/>
                     </NavLink>
                 </nav>
             </div>
