@@ -34,7 +34,7 @@ function Alphabet() {
     return (
         <>
             <Navigation/>
-            <main className=" flex flex-col justify-start items-center">
+            <main className=" flex flex-col justify-start items-center mb-8">
 
                 <h1 className="text-center text-Navy font-nunito font-extrabold text-6xl mt-8 mb-8">Alfabet</h1>
 
