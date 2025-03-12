@@ -118,7 +118,6 @@ export class Game extends Engine {
                     this.snail.pos.x += 55 * 25;
                     console.log("Skipped to the last letter.");
                 }
-                return;
             }
         };
 
