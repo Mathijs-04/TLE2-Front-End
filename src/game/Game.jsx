@@ -67,42 +67,36 @@ function GameComponent() {
                 />
                 {!gameStarted && (
                     <div className="flex flex-col gap-5 items-center">
-                        <h2 className="text-white text-2xl">Select Difficulty</h2>
+                        <h2 className="text-navy text-5xl font-nunito font-bold">Selecteer Niveau</h2>
                         <button
                             onClick={() => startGameWithDifficulty('beginner')}
-                            className="bg-gray-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-gray-600 transition-colors w-48"
-                        >
+                            className="bg-Yellow w-80 text-Navy text-3xl font-nunito font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
                             Beginner
                         </button>
                         <button
                             onClick={() => startGameWithDifficulty('gemiddeld')}
-                            className="bg-gray-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-gray-600 transition-colors w-48"
-                        >
+                            className="bg-Yellow w-80 text-Navy text-3xl font-nunito font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
                             Gemiddeld
                         </button>
                         <button
                             onClick={() => startGameWithDifficulty('gevorderd')}
-                            className="bg-gray-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-gray-600 transition-colors w-48"
-                        >
+                            className="bg-Yellow w-80 text-Navy text-3xl font-nunito font-bold px-12 py-6 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
                             Gevorderd
                         </button>
                     </div>
                 )}
                 {gameEnded && (
                     <div className="flex flex-col gap-5 items-center">
-                        <h2 className="text-white text-4xl">Game Completed!</h2>
                         <div className="flex gap-4">
                             <button
                                 onClick={restartGame}
-                                className="bg-gray-500 text-white px-8 py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors w-48"
-                            >
-                                Opnieuw
+                                className="bg-Yellow w-80 text-Navy text-2xl font-nunito font-bold px-8 py-4 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
+                                Speel opnieuw
                             </button>
                             <button
                                 onClick={returnToMenu}
-                                className="bg-gray-500 text-white px-8 py-4 rounded-lg text-xl hover:bg-gray-600 transition-colors w-48"
-                            >
-                                Ander level
+                                className="bg-Yellow w-80 text-Navy text-2xl font-nunito font-bold px-8 py-4 rounded-3xl shadow-lg hover:bg-yellow-500 transition">
+                                Ander niveau
                             </button>
                         </div>
                     </div>
