@@ -18,7 +18,6 @@ export class Game extends Engine {
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
-
     difficultyCheck() {
         const background = new Actor({
             x: 640,
@@ -45,16 +44,7 @@ export class Game extends Engine {
 
     startGame() {
 
-
-
         this.difficultyCheck()
-        //
-        // const snail = new Actor();
-        // snail.graphics.use(Resources.Snail.toSprite());
-        // snail.pos = new Vector(-120, 10);
-        // snail.scale = new Vector(1, 1);
-        // this.add(snail);
-
 
         console.log("Starting game...");
         this.snail = new Actor();
