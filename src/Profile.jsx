@@ -5,10 +5,10 @@ function Profile() {
         <>
             <Navigation />
 
-            <main className="flex flex-col lg:flex-row items-center justify-center min-h-screen relative">
+            <main className="flex flex-col lg:items-start items-center lg:flex-row justify-center min-h-screen relative">
 
                 {/* Center - Welcome & Student Info */}
-                <div className="text-Navy font-nunito text-center w-full max-w-sm lg:max-w-lg break-words">
+                <div className="text-Navy font-nunito text-center w-full max-w-sm lg:max-w-lg break-words mt-8 lg:mt-32">
                     <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">Welkom,</h1>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-4">Jake Aaron Hersbach</h2>
                     <img className="w-28 sm:w-32 lg:w-40 mx-auto mt-8" src="/images/user.png"/>
