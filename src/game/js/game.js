@@ -18,7 +18,44 @@ export class Game extends Engine {
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
+
+    difficultyCheck() {
+        const background = new Actor({
+            x: 640,
+            y: 360 ,
+            anchor: new Vector(0.5, 0.5)
+        });
+
+        console.log(this.difficulty)
+        if (this.difficulty === 'beginner') {
+            background.graphics.use(Resources.BgEasy.toSprite());
+            this.add(background);
+        }
+        else if (this.difficulty === 'gemiddeld') {
+            background.graphics.use(Resources.BgNormal.toSprite());
+            this.add(background);
+        }
+        else if (this.difficulty === 'gevorderd') {
+            background.graphics.use(Resources.BgHard.toSprite());
+            this.add(background);
+        }
+    }
+
+
+
     startGame() {
+
+
+
+        this.difficultyCheck()
+
+        const snail = new Actor();
+        snail.graphics.use(Resources.Snail.toSprite());
+        snail.pos = new Vector(-120, 310);
+        snail.scale = new Vector(1, 1);
+        this.add(snail);
+
+
         console.log("Starting game...");
         this.snail = new Actor();
         this.snail.graphics.use(Resources.Snail.toSprite());
