@@ -22,19 +22,31 @@ export class Game extends Engine {
         });
     }
 
-    startGame() {
-
+    difficultyCheck() {
         const background = new Actor({
             x: 640,
             y: 360 ,
             anchor: new Vector(0.5, 0.5)
         });
 
-        background.graphics.use(Resources.BgEasy.toSprite());
-        this.add(background);
-        console.log('bg loaded')
+        console.log(this.difficulty)
+        if (this.difficulty === 'beginner') {
+            background.graphics.use(Resources.BgEasy.toSprite());
+            this.add(background);
+        }
+        else if (this.difficulty === 'gemiddeld') {
+            background.graphics.use(Resources.BgNormal.toSprite());
+            this.add(background);
+        }
+        else if (this.difficulty === 'gevorderd') {
+            background.graphics.use(Resources.BgHard.toSprite());
+            this.add(background);
+        }
+    }
 
+    startGame() {
 
+        this.difficultyCheck()
 
         const snail = new Actor();
         snail.graphics.use(Resources.Snail.toSprite());
@@ -150,6 +162,11 @@ export class Game extends Engine {
 
         window.addEventListener('keydown', this.keyDownHandler);
     }
+
+
+
+
+
 
     startNewTimer() {
         if (this.timerId) {
