@@ -46,19 +46,20 @@ function GameComponent() {
 
     const fetchHandler = async (difficulty) => {
         console.log(difficulty)
-        // const response = await fetch(`http://localhost:3001/game/${difficulty}`,
-        //     {
-        //         method: 'GET',
-        //         headers: {
-        //             method: 'GET',
-        //             'Content-Type': 'application/json',
-        //             'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
-        //             Authorization: `Bearer ${localStorage.getItem('token')}`,
-        //         },
-        //
-        //     })
-        // const data = await response.json()
-        // console.log(data)
+        const response = await fetch(`http://145.24.222.137:8000/api/v1/characters`,
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+
+            })
+        const data = await response.json()
+        console.log(data)
+        console.log(localStorage.getItem('characters'))
         startGameWithDifficulty(difficulty);
     }
 
