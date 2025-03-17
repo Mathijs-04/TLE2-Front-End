@@ -3,11 +3,7 @@ import {useEffect} from "react";
 
 function RedirectHRLogin() {
     const navigate = useNavigate();
-    // opslaan waar iemand vandaan komt en na het inloggen weer terugsturen
-    // opslaan moet gedaan worden in de localstorage
-    // redirecten naar de HR-login pagina
-    // https://cmgt.hr.nl/chat-login/handle/%7Bapplication%7D?redirect=http://145.24.222.170/login
-    // na het inloggen moet de gebruiker terug naar de pagina waar hij vandaan kwam
+
     const [searchParams, setSearchParams] = useSearchParams();
     const tokenSSO = searchParams.get("token");
     const name = searchParams.get("name");
@@ -32,7 +28,7 @@ function RedirectHRLogin() {
                     })
                 })
                 const data = await response.json()
-                console.log(data)
+                // console.log(data)
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("name", name);
                 localStorage.setItem("email", email);
