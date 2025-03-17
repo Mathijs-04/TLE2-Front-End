@@ -1,7 +1,6 @@
 import Navigation from "./components/Navigation.jsx";
 import {Link, useLocation, useNavigate} from "react-router";
 import {useEffect} from "react";
-// import {useEffect, useState} from "react";
 import { useState } from "react";
 
 function Home() {
@@ -42,6 +41,15 @@ function Home() {
     // }, []);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+    // Prevent background scroll when popup is open
+    useEffect(() => {
+        if (isPopupOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [isPopupOpen]);
+
     return (
         <>
             <Navigation />
@@ -55,13 +63,9 @@ function Home() {
                     <button
                         onClick={() => setIsPopupOpen(true)}
                         aria-label="Toon informatie"
-                        className="focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                        className="p-2 rounded-full transition"
                     >
-                        <img
-                            className="h-auto max-h-14 w-auto"
-                            src="/images/info.png"
-                            alt="Info knop"
-                        />
+                        <img className="h-auto max-h-14 w-auto" src="/images/info.png" alt="Info knop" />
                     </button>
 
                     <Link to={"/game"}>
@@ -74,29 +78,35 @@ function Home() {
 
                 {isPopupOpen && (
                     <div
-                        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50"
+                        className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4 z-50 overflow-y-auto"
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby="popup-title"
                     >
-                        <div className="bg-white text-Navy p-6 rounded-xl shadow-lg max-w-lg w-full">
-                            <h2 id="popup-title" className="text-2xl font-extrabold mb-4">INFORMATIE</h2>
-                            <p className="text-lg mb-4">
-                                In dit spel kan jij doormiddel van jouw camera oefenen met vingerspellen.
-                                Help de slak naar de finish door de juiste handvormen aan te nemen.
+                        <div className="bg-white text-Navy p-8 rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto text-center">
+                            <h2 id="popup-title" className="text-4xl font-extrabold mb-10">INFORMATIE</h2>
+                            <p className="text-2xl mb-5">
+                                In dit spel kan jij door middel van jouw camera oefenen met vingerspellen.
+                                Help de slak naar de finish door de juiste handvormen aan te nemen!
                             </p>
-                            <p className="text-lg mb-4">
-                                Weet je het even niet meer? Spiek dan nog even in het Alfabet. Dat kan hier:
-                                <img src="/images/abc-block.png" alt="Alfabet referentie" className="mt-2 mx-auto max-h-32"/>
+                            <p className="text-2xl mb-5">
+                                Weet je het even niet meer? Spiek dan nog even in het Alfabet. Die kan je linksboven vinden met dit icoontje:
+                            </p>
+                            <img
+                                src="/images/abc-block.png"
+                                alt="Alfabet referentie"
+                                className="max-w-[12vh] sm:max-w-[15vh] md:max-w-[18vh] lg:max-w-[8vh] w-auto h-auto mx-auto block mt-2"
+                            />
+                            <p className="text-xl mt-3">
                                 Je moet dan wel opnieuw beginnen...
                             </p>
-                            <p className="text-lg mb-6">
+                            <p className="text-2xl mb-10">
                                 Druk op Start en kies hoe moeilijk jij het spel wilt spelen.
                                 Speel en wordt beter in vingerspellen!
                             </p>
                             <button
                                 onClick={() => setIsPopupOpen(false)}
-                                className="bg-Yellow text-Navy px-6 py-3 rounded-lg text-lg font-bold hover:bg-yellow-500 transition w-full"
+                                className="bg-Yellow text-Navy px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-500 transition w-full"
                                 aria-label="Sluit informatie"
                             >
                                 Sluiten
@@ -109,7 +119,7 @@ function Home() {
                     <div className="border-b-2 border-Yellow w-28 mb-4">
                         <h2 className="whitespace-nowrap text-xl font-nunito font-extrabold">Recente games</h2>
                     </div>
-                    <ul className="text-l space-y-2 mb-2">
+                    <ul className="text-xl space-y-2 mb-2">
                         {Array.from({ length: 8 }).map((_, i) => (
                             <li key={i} className="flex justify-between border-b pb-1">
                                 <span className="italic">John Doe</span>
