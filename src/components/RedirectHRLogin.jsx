@@ -47,7 +47,7 @@ function RedirectHRLogin() {
     }, [navigate]);
 
     return (
-        <>Kaas</>
+        <>Jouw infromatie aan het ophalen</>
     )
 }
 
