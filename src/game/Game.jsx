@@ -45,14 +45,21 @@ function GameComponent() {
     }, [detectedGesture]);
 
     const fetchHandler = async (difficulty) => {
-        const response = await fetch(`http://localhost:3001/game/${difficulty}`,
-            {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
+        console.log(difficulty)
+        // const response = await fetch(`http://localhost:3001/game/${difficulty}`,
+        //     {
+        //         method: 'GET',
+        //         headers: {
+        //             method: 'GET',
+        //             'Content-Type': 'application/json',
+        //             'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
+        //             Authorization: `Bearer ${localStorage.getItem('token')}`,
+        //         },
+        //
+        //     })
+        // const data = await response.json()
+        // console.log(data)
+        startGameWithDifficulty(difficulty);
     }
 
 
@@ -78,12 +85,12 @@ function GameComponent() {
                             Beginner
                         </button>
                         <button
-                            onClick={() => startGameWithDifficulty('gemiddeld')}
+                            onClick={() => fetchHandler('gemiddeld')}
                             className="bg-DuskBlue w-80 text-white text-3xl font-nunito font-bold px-12 py-6 rounded-lg shadow-lg outline-black outline-2 hover:bg-[#4F6490] transition">
                             Gemiddeld
                         </button>
                         <button
-                            onClick={() => startGameWithDifficulty('gevorderd')}
+                            onClick={() => fetchHandler('gevorderd')}
                             className="bg-SlateBlue w-80 text-white text-3xl font-nunito font-bold px-12 py-6 rounded-lg shadow-lg outline-black outline-2 hover:bg-[#1F355F] transition">
                             Gevorderd
                         </button>
