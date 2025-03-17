@@ -1,6 +1,6 @@
 import '../css/style.css';
-import { Actor, Engine, Vector, DisplayMode, Color, Label, Font, TextAlign } from 'excalibur';
-import { Resources, ResourceLoader } from './resources.js';
+import {Actor, Engine, Vector, DisplayMode, Color, Label, Font, TextAlign} from 'excalibur';
+import {Resources, ResourceLoader} from './resources.js';
 
 export class Game extends Engine {
     constructor(canvasElement, difficulty, onGameEnd) {
@@ -21,7 +21,7 @@ export class Game extends Engine {
     difficultyCheck() {
         const background = new Actor({
             x: 640,
-            y: 360 ,
+            y: 360,
             anchor: new Vector(0.5, 0.5)
         });
 
@@ -29,17 +29,14 @@ export class Game extends Engine {
         if (this.difficulty === 'beginner') {
             background.graphics.use(Resources.BgEasy.toSprite());
             this.add(background);
-        }
-        else if (this.difficulty === 'gemiddeld') {
+        } else if (this.difficulty === 'gemiddeld') {
             background.graphics.use(Resources.BgNormal.toSprite());
             this.add(background);
-        }
-        else if (this.difficulty === 'gevorderd') {
+        } else if (this.difficulty === 'gevorderd') {
             background.graphics.use(Resources.BgHard.toSprite());
             this.add(background);
         }
     }
-
 
 
     startGame() {
@@ -53,29 +50,42 @@ export class Game extends Engine {
         this.snail.scale = new Vector(1, 1);
         this.add(this.snail);
 
-        this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        this.alphabet = 'bbbbbbbbbbbbb'.split('');
         this.lettersQueue = this.shuffleArray([...this.alphabet]);
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(620, 550),
-            font: new Font({ size: 64, family: 'Arial', color: Color.White }),
-            textAlign: TextAlign.Center
+            pos: new Vector(610, 540),
+            font: new Font({
+                size: 100,
+                family: "Roboto Mono, monospace",
+                color: Color.Yellow
+            }),
+            textAlign: TextAlign.Center,
+            bold: true,
+            shadow: {
+                blur: 2,
+                offset: new Vector(2, 2),
+                color: Color.Black,
+            }
         });
         this.add(this.currentLetter);
+
 
         this.timerLabel = new Label({
             text: 'Time: 3',
             pos: new Vector(50, 20),
-            font: new Font({ size: 32, family: 'Arial', color: Color.White }),
+            font: new Font({size: 32, family: 'Arial', color: Color.White}),
             textAlign: TextAlign.Left
+
         });
+
         this.add(this.timerLabel);
 
         this.scoreLabel = new Label({
             text: '',
             pos: new Vector(50, 60),
-            font: new Font({ size: 32, family: 'Arial', color: Color.White }),
+            font: new Font({size: 32, family: 'Arial', color: Color.White}),
             textAlign: TextAlign.Left
         });
         this.add(this.scoreLabel);
@@ -83,15 +93,20 @@ export class Game extends Engine {
         this.difficultyLabel = new Label({
             text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
             pos: new Vector(50, 650),
-            font: new Font({ size: 32, family: 'Arial', color: Color.White }),
+            font: new Font({
+                size: 32,
+                family: 'Arial',
+                color: Color.White,
+            }),
             textAlign: TextAlign.Left
+
         });
         this.add(this.difficultyLabel);
 
         this.explanationLabel = new Label({
             text: '',
             pos: new Vector(480, 580),
-            font: new Font({ size: 32, family: 'Arial', color: Color.Red }),
+            font: new Font({size: 32, family: 'Arial', color: Color.Red}),
             textAlign: TextAlign.Center
         });
         this.add(this.explanationLabel);
@@ -114,6 +129,7 @@ export class Game extends Engine {
         window.addEventListener('keydown', this.keyDownHandler);
         this.startNewTimer();
     }
+
 
     handleGestureDetection(result) {
         if (!this.inputEnabled || !result || result.length === 0) {
@@ -187,7 +203,7 @@ export class Game extends Engine {
         const endLabel = new Label({
             text: 'Game Ended',
             pos: new Vector(460, 300),
-            font: new Font({ size: 64, family: 'Arial', color: Color.White }),
+            font: new Font({size: 64, family: 'Arial', color: Color.White}),
             textAlign: TextAlign.Center
         });
         this.add(endLabel);
