@@ -44,6 +44,19 @@ function GameComponent() {
         }
     }, [detectedGesture]);
 
+    const fetchHandler = async (difficulty) => {
+        const response = await fetch(`http://localhost:3001/game/${difficulty}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+    }
+
+
+
     return (
         <>
             <Navigation/>
@@ -60,7 +73,7 @@ function GameComponent() {
                     <div className="flex flex-col gap-5 items-center">
                         <h2 className="text-navy text-5xl font-nunito font-bold">Selecteer Niveau</h2>
                         <button
-                            onClick={() => startGameWithDifficulty('beginner')}
+                            onClick={() => fetchHandler('beginner')}
                             className="bg-IceBlue w-80 text-white text-3xl font-nunito font-bold px-12 py-6 rounded-lg shadow-lg outline-black outline-2 hover:bg-[#8FA9D8] transition">
                             Beginner
                         </button>
