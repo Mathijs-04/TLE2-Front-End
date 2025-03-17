@@ -1,6 +1,6 @@
 import '../css/style.css';
-import {Actor, Engine, Vector, DisplayMode, Color, Label, Font, TextAlign} from 'excalibur';
-import {Resources, ResourceLoader} from './resources.js';
+import { Actor, Engine, Vector, DisplayMode, Color, Label, Font, TextAlign } from 'excalibur';
+import { Resources, ResourceLoader } from './resources.js';
 
 export class Game extends Engine {
     constructor(canvasElement, difficulty, onGameEnd) {
@@ -25,7 +25,6 @@ export class Game extends Engine {
             anchor: new Vector(0.5, 0.5)
         });
 
-        console.log(this.difficulty)
         if (this.difficulty === 'beginner') {
             background.graphics.use(Resources.BgEasy.toSprite());
             this.add(background);
@@ -38,12 +37,9 @@ export class Game extends Engine {
         }
     }
 
-
     startGame() {
+        this.difficultyCheck();
 
-        this.difficultyCheck()
-
-        console.log("Starting game...");
         this.snail = new Actor();
         this.snail.graphics.use(Resources.Snail.toSprite());
         this.snail.pos = new Vector(-120, 300);
@@ -65,14 +61,12 @@ export class Game extends Engine {
         };
 
         const shuffledValues = retrieveAndShuffleValues();
-        console.log(shuffledValues);
         this.lettersQueue = shuffledValues;
-
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
             pos: new Vector(620, 550),
-            font: new Font({size: 64, family: 'Arial', color: Color.White}),
+            font: new Font({ size: 64, family: 'Arial', color: Color.White }),
             textAlign: TextAlign.Center
         });
         this.add(this.currentLetter);
@@ -80,7 +74,7 @@ export class Game extends Engine {
         this.timerLabel = new Label({
             text: 'Time: 3',
             pos: new Vector(50, 20),
-            font: new Font({size: 32, family: 'Arial', color: Color.White}),
+            font: new Font({ size: 32, family: 'Arial', color: Color.White }),
             textAlign: TextAlign.Left
         });
         this.add(this.timerLabel);
@@ -88,7 +82,7 @@ export class Game extends Engine {
         this.scoreLabel = new Label({
             text: '',
             pos: new Vector(50, 60),
-            font: new Font({size: 32, family: 'Arial', color: Color.White}),
+            font: new Font({ size: 32, family: 'Arial', color: Color.White }),
             textAlign: TextAlign.Left
         });
         this.add(this.scoreLabel);
@@ -96,7 +90,7 @@ export class Game extends Engine {
         this.difficultyLabel = new Label({
             text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
             pos: new Vector(50, 650),
-            font: new Font({size: 32, family: 'Arial', color: Color.White}),
+            font: new Font({ size: 32, family: 'Arial', color: Color.White }),
             textAlign: TextAlign.Left
         });
         this.add(this.difficultyLabel);
@@ -104,7 +98,7 @@ export class Game extends Engine {
         this.explanationLabel = new Label({
             text: '',
             pos: new Vector(480, 580),
-            font: new Font({size: 32, family: 'Arial', color: Color.Red}),
+            font: new Font({ size: 32, family: 'Arial', color: Color.Red }),
             textAlign: TextAlign.Center
         });
         this.add(this.explanationLabel);
@@ -119,7 +113,6 @@ export class Game extends Engine {
                     this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
                     this.currentLetter.text = this.lettersQueue[0].toUpperCase();
                     this.snail.pos.x += 55 * 25;
-                    console.log("Skipped to the last letter.");
                 }
             }
         };
@@ -130,16 +123,13 @@ export class Game extends Engine {
 
     handleGestureDetection(result) {
         if (!this.inputEnabled || !result || result.length === 0) {
-            console.log("Input not enabled or no result.");
             return;
         }
 
-        const targetChar = this.lettersQueue[0];
-        console.log(`Expected letter: ${targetChar}, Detected letters:`, result);
+        const targetChar = this.lettersQueue[0].toLowerCase();
+        const detectedLetters = result.map(([letter]) => letter.toLowerCase());
 
-        const detectedLetters = result.map(([letter]) => letter);
         if (detectedLetters.includes(targetChar)) {
-            console.log(`Correct letter detected: ${targetChar}`);
             this.snail.pos.x += 55;
             this.lettersQueue.shift();
 
@@ -151,8 +141,7 @@ export class Game extends Engine {
             }
             this.explanationLabel.text = '';
         } else {
-            console.log(`Incorrect letter. Expected: ${targetChar}`);
-            this.explanationLabel.text = `Wrong letter! Expected ${targetChar.toUpperCase()}`;
+            this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
             this.startNewTimer();
         }
 
@@ -179,16 +168,7 @@ export class Game extends Engine {
         }, 1000);
     }
 
-    shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
     endGame(snail) {
-        console.log("Game ended.");
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
@@ -200,7 +180,7 @@ export class Game extends Engine {
         const endLabel = new Label({
             text: 'Game Ended',
             pos: new Vector(460, 300),
-            font: new Font({size: 64, family: 'Arial', color: Color.White}),
+            font: new Font({ size: 64, family: 'Arial', color: Color.White }),
             textAlign: TextAlign.Center
         });
         this.add(endLabel);
