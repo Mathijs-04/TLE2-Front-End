@@ -46,11 +46,11 @@ export class Game extends Engine {
         console.log("Starting game...");
         this.snail = new Actor();
         this.snail.graphics.use(Resources.Snail.toSprite());
-        this.snail.pos = new Vector(-120, 300);
-        this.snail.scale = new Vector(1, 1);
+        this.snail.pos = new Vector(0, 300);
+        this.snail.scale = new Vector(0.5, 0.5);
         this.add(this.snail);
 
-        this.alphabet = 'bbbbbbbbbbbbb'.split('');
+        this.alphabet = 'abcd'.split('');
         this.lettersQueue = this.shuffleArray([...this.alphabet]);
 
         this.currentLetter = new Label({
@@ -74,9 +74,13 @@ export class Game extends Engine {
 
         this.timerLabel = new Label({
             text: 'Time: 3',
-            pos: new Vector(50, 20),
-            font: new Font({size: 32, family: 'Arial', color: Color.White}),
-            textAlign: TextAlign.Left
+            pos: new Vector(510, 510),
+            font: new Font({
+                size: 32,
+                family: "Roboto Mono, monospace",
+                color: Color.White
+            }),
+            textAlign: TextAlign.Center
 
         });
 
@@ -85,20 +89,24 @@ export class Game extends Engine {
         this.scoreLabel = new Label({
             text: '',
             pos: new Vector(50, 60),
-            font: new Font({size: 32, family: 'Arial', color: Color.White}),
+            font: new Font({
+                size: 32,
+                family: 'Arial',
+                color: Color.White}),
             textAlign: TextAlign.Left
         });
         this.add(this.scoreLabel);
 
         this.difficultyLabel = new Label({
-            text: `Difficulty: ${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
-            pos: new Vector(50, 650),
+            text: `${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
+            pos: new Vector(50, 50),
+            anchor: new Vector(0.5, 0.5), // Align the label's center to the pos
             font: new Font({
                 size: 32,
-                family: 'Arial',
+                family: "Roboto Mono, monospace",
                 color: Color.White,
             }),
-            textAlign: TextAlign.Left
+            textAlign: TextAlign.Center
 
         });
         this.add(this.difficultyLabel);
@@ -150,6 +158,8 @@ export class Game extends Engine {
                 this.endGame(this.snail);
             } else {
                 this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+                this.currentLetter.font.color = Color.Green;
+
                 this.startNewTimer();
             }
             this.explanationLabel.text = '';
@@ -157,6 +167,8 @@ export class Game extends Engine {
             console.log(`Incorrect letter. Expected: ${targetChar}`);
             this.explanationLabel.text = `Wrong letter! Expected ${targetChar.toUpperCase()}`;
             this.startNewTimer();
+            this.currentLetter.font.color = Color.Red;
+
         }
 
         this.inputEnabled = false;
@@ -178,8 +190,11 @@ export class Game extends Engine {
                 this.inputEnabled = true;
                 this.timerLabel.text = 'Input now!';
                 this.scoreLabel.text = '';
+                this.currentLetter.font.color = Color.Yellow;
+
             }
         }, 1000);
+
     }
 
     shuffleArray(array) {

@@ -59,8 +59,9 @@ function GameComponent() {
     return (
         <>
             <Navigation/>
-            {gameStarted && <HandTrackingComponent onDetect={setDetectedGesture}/>}
             <div className="flex flex-col items-center justify-start h-screen pt-[5vh] gap-4">
+
+            {gameStarted && <HandTrackingComponent onDetect={setDetectedGesture}/>}
                 <canvas
                     ref={canvasRef}
                     width={1280}

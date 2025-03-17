@@ -172,11 +172,26 @@ const HandTrackingComponent = ({onDetect}) => {
     }, []);
 
     return (
-        <div style={{position: 'absolute', bottom: 0}}>
-            <video ref={videoRef} style={{transform: "scaleX(-1)", display: 'none'}} autoPlay></video>
+        <div style={{
+            position: 'absolute',
+            paddingTop: '30%',
+            marginRight: '50%'
+
+
+        }}>
+            <video ref={videoRef} style={{
+                transform: "scaleX(-1)",
+                display: 'none'
+            }} autoPlay>
+            </video>
             <canvas
                 ref={canvasRef}
-                style={{transform: "scaleX(-1)", display: "absolute", bottom: "500px"}}
+                style={{
+                    transform: "scaleX(-1)",
+                    display: "fixed",
+                    bottom: "500px",
+
+                }}
             ></canvas>
         </div>
 
