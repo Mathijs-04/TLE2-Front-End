@@ -59,7 +59,8 @@ function GameComponent() {
             })
         const data = await response.json()
         console.log(data)
-        console.log(localStorage.getItem('characters'))
+        localStorage.setItem('characters', JSON.stringify(data));
+        // begint bij 0 en eindigt bij 25
         startGameWithDifficulty(difficulty);
     }
 
