@@ -34,6 +34,8 @@ function RedirectHRLogin() {
                 const data = await response.json()
                 console.log(data)
                 localStorage.setItem("token", data.token);
+                localStorage.setItem("name", name);
+                localStorage.setItem("email", email);
             } catch (error) {
                 console.error("Error in fetching token", error)
             }
