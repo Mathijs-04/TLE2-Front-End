@@ -1,9 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Game} from './js/game';
 import Navigation from "../components/Navigation.jsx";
+import {useLocation, useNavigate} from "react-router";
 import HandTrackingComponent from "./handTracking.jsx";
 
 function GameComponent() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const currentUrl = location.pathname;
+        if (token === null) {
+            localStorage.setItem("redirectUrl", currentUrl);
+            window.location.href = 'https://cmgt.hr.nl/chat-login/handle/%7Bapplication%7D?redirect=http://localhost:5173/login';
+        }
+    }, [navigate]);
+
     const canvasRef = useRef(null);
     const [gameStarted, setGameStarted] = useState(false);
     const [gameEnded, setGameEnded] = useState(false);
