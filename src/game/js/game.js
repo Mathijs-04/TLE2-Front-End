@@ -155,18 +155,20 @@ export class Game extends Engine {
             }
         };
 
+        //development bypass for handdetection with spacebar, remove when live
+        window.addEventListener("keydown", (evt) => {
+            if (evt.key === "k") {
+                this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
+                this.lettersQueue.shift();
+            }
+        });
+
         window.addEventListener('keydown', this.keyDownHandler);
         this.startNewTimer();
     }
 
     handleGestureDetection(result) {
-        //development bypass for handdetection with spacebar, remove when live
-        window.addEventListener("keydown", (evt) => {
-            if (evt.key === "K") {
-                this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
-                this.lettersQueue.shift();
-            }
-        });
+
 
 
         if (!this.inputEnabled || !result || result.length === 0) {
