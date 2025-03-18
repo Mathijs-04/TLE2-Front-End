@@ -42,9 +42,10 @@ const HandTrackingComponent = ({onDetect}) => {
                     videoRef.current.play();
                     videoRef.current.onloadeddata = () => {
                         console.log("Webcam started. Loading model...");
-                        importJSON();
-                        visualizeHands();
+                        importJSON().then(visualizeHands);
                     };
+                } else{
+                    console.error('kaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas 8===>')
                 }
             }).catch((error) => {
                 console.error("Error accessing webcam:", error);
@@ -174,8 +175,8 @@ const HandTrackingComponent = ({onDetect}) => {
     return (
         <div style={{
             position: 'absolute',
-            paddingTop: '30%',
-            marginRight: '50%'
+            paddingTop: '520px',
+            marginRight: '850px'
 
 
         }}>
@@ -190,7 +191,6 @@ const HandTrackingComponent = ({onDetect}) => {
                     transform: "scaleX(-1)",
                     display: "fixed",
                     bottom: "500px",
-
                 }}
             ></canvas>
         </div>

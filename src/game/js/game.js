@@ -29,22 +29,29 @@ export class Game extends Engine {
         if (this.difficulty === 'beginner') {
             background.graphics.use(Resources.BgEasy.toSprite());
             this.add(background);
+            this.snail.graphics.use(Resources.Snail.toSprite());
+
         } else if (this.difficulty === 'gemiddeld') {
             background.graphics.use(Resources.BgNormal.toSprite());
             this.add(background);
+            this.snail.graphics.use(Resources.Snail1.toSprite());
+
         } else if (this.difficulty === 'gevorderd') {
             background.graphics.use(Resources.BgHard.toSprite());
             this.add(background);
+            this.snail.graphics.use(Resources.Snail2.toSprite());
+
         }
     }
 
     startGame() {
 
-        this.difficultyCheck()
 
         console.log("Starting game...");
         this.snail = new Actor();
-        this.snail.graphics.use(Resources.Snail.toSprite());
+
+        this.difficultyCheck()
+
         this.snail.pos = new Vector(0, 300);
         this.snail.scale = new Vector(0.5, 0.5);
         this.add(this.snail);
@@ -64,6 +71,7 @@ export class Game extends Engine {
         };
 
         const shuffledValues = retrieveAndShuffleValues();
+        console.log(shuffledValues);
         this.lettersQueue = shuffledValues;
 
         this.currentLetter = new Label({
@@ -89,7 +97,7 @@ export class Game extends Engine {
             text: 'Time: 3',
             pos: new Vector(510, 510),
             font: new Font({
-                size: 32,
+                size: 26,
                 family: "Roboto Mono, monospace",
                 color: Color.White
             }),
@@ -117,7 +125,7 @@ export class Game extends Engine {
             font: new Font({
                 size: 32,
                 family: "Roboto Mono, monospace",
-                color: Color.White,
+                color: Color.Black,
             }),
             textAlign: TextAlign.Center
 
@@ -141,7 +149,7 @@ export class Game extends Engine {
                 if (this.lettersQueue.length > 1) {
                     this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
                     this.currentLetter.text = this.lettersQueue[0].toUpperCase();
-                    this.snail.pos.x += 55 * 25;
+                    this.snail.pos.x += 46 * 25;
                     console.log("Skipped to the last letter.");
                 }
             }
@@ -152,6 +160,15 @@ export class Game extends Engine {
     }
 
     handleGestureDetection(result) {
+        //development bypass for handdetection with spacebar, remove when live
+        window.addEventListener("keydown", (evt) => {
+            if (evt.key === "K") {
+                this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
+                this.lettersQueue.shift();
+            }
+        });
+
+
         if (!this.inputEnabled || !result || result.length === 0) {
             console.log("Input not enabled or no result.");
             return;
@@ -159,9 +176,9 @@ export class Game extends Engine {
 
         const targetChar = this.lettersQueue[0].toLowerCase();
         const detectedLetters = result.map(([letter]) => letter.toLowerCase());
-
+        console.log(`Detected letters: ${detectedLetters}`);
         if (detectedLetters.includes(targetChar)) {
-            this.snail.pos.x += 55;
+            this.snail.actions.moveBy(new Vector(46, 0), 200);
             this.lettersQueue.shift();
 
             if (this.lettersQueue.length === 0) {
@@ -179,6 +196,9 @@ export class Game extends Engine {
             this.currentLetter.font.color = Color.Red;
 
         }
+
+
+
 
         this.inputEnabled = false;
     }
