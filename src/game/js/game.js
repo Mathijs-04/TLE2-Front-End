@@ -178,7 +178,9 @@ export class Game extends Engine {
 
                 setTimeout(() => {
                     this.currentLetter.font.color = Color.Yellow;
-                }, 1000);
+                    this.feedbackLabel.kill();
+
+                }, 2000);
 
                 this.feedbackLabel = new Label({
                     text: 'Goed gedaan!',
@@ -191,16 +193,14 @@ export class Game extends Engine {
                 });
                 this.add(this.feedbackLabel)
 
-                    // Move upward by 50 pixels over 2000ms
-                    this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
-                    // Fade out from full opacity to 0 over 2000ms
-                    this.feedbackLabel.actions.fade(0, 1000)
-
+                // Move upward by 50 pixels over 2000ms
+                this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
+                // Fade out from full opacity to 0 over 2000ms
+                this.feedbackLabel.actions.fade(0, 1000)
 
 
                 // Once the animation is complete, remove the label from the scene
 
-                callMethod(() => this.feedbackLabel.kill());
 
 
             }
