@@ -44,16 +44,14 @@ function Profile() {
                     className="text-Navy font-nunito text-center w-full max-w-sm lg:max-w-lg break-words mt-8 lg:mt-32">
                     <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">Welkom,</h1>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-4">
-                        {nameParts.map((part, index) => (
-                            <span key={index}>
-            {part}
-                                {index < nameParts.length - 1 &&
-                                    <br/>}
-          </span>
-                        ))}
+                        {nameParts[0].split("(")[0]}
                     </h2>
+
                     <img className="w-28 sm:w-32 lg:w-40 mx-auto mt-8" src="/images/user.png"/>
-                    <p className="mt-8 text-xl sm:text-2xl lg:text-3xl font-light">1048489</p>
+                    <p className="mt-8 text-xl sm:text-2xl lg:text-3xl font-light">
+                        {nameParts[1] ? nameParts[1].replace(/[()]/g, "") : ""}
+                    </p>
+
                 </div>
 
                 {/* Left Side - Recente Games */}

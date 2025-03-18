@@ -38,7 +38,6 @@ export class Game extends Engine {
         }
     }
 
-
     startGame() {
 
         this.difficultyCheck()
@@ -50,8 +49,22 @@ export class Game extends Engine {
         this.snail.scale = new Vector(0.5, 0.5);
         this.add(this.snail);
 
-        this.alphabet = 'abcd'.split('');
-        this.lettersQueue = this.shuffleArray([...this.alphabet]);
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        };
+
+        const retrieveAndShuffleValues = () => {
+            const characters = JSON.parse(localStorage.getItem('characters')) || [];
+            const values = characters.map(character => character.value);
+            return shuffleArray(values);
+        };
+
+        const shuffledValues = retrieveAndShuffleValues();
+        this.lettersQueue = shuffledValues;
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
@@ -138,19 +151,16 @@ export class Game extends Engine {
         this.startNewTimer();
     }
 
-
     handleGestureDetection(result) {
         if (!this.inputEnabled || !result || result.length === 0) {
             console.log("Input not enabled or no result.");
             return;
         }
 
-        const targetChar = this.lettersQueue[0];
-        console.log(`Expected letter: ${targetChar}, Detected letters:`, result);
+        const targetChar = this.lettersQueue[0].toLowerCase();
+        const detectedLetters = result.map(([letter]) => letter.toLowerCase());
 
-        const detectedLetters = result.map(([letter]) => letter);
         if (detectedLetters.includes(targetChar)) {
-            console.log(`Correct letter detected: ${targetChar}`);
             this.snail.pos.x += 55;
             this.lettersQueue.shift();
 
@@ -164,8 +174,7 @@ export class Game extends Engine {
             }
             this.explanationLabel.text = '';
         } else {
-            console.log(`Incorrect letter. Expected: ${targetChar}`);
-            this.explanationLabel.text = `Wrong letter! Expected ${targetChar.toUpperCase()}`;
+            this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
             this.startNewTimer();
             this.currentLetter.font.color = Color.Red;
 
@@ -194,19 +203,9 @@ export class Game extends Engine {
 
             }
         }, 1000);
-
-    }
-
-    shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
     }
 
     endGame(snail) {
-        console.log("Game ended.");
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
