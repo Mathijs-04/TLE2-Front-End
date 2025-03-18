@@ -232,11 +232,12 @@ export class Game extends Engine {
     endGame(snail) {
         clearInterval(this.timerInterval); // Stops the timer
 
+        const finalTime = Math.floor((Date.now() - this.startTime) / 1000).toString();
+        localStorage.setItem("playTime", finalTime);
 
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
-        // this.timerLabel.kill();
         this.scoreLabel.kill();
         this.difficultyLabel.kill();
         this.explanationLabel.kill();
