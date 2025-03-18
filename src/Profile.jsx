@@ -3,6 +3,28 @@ import {useLocation, useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 
 function Profile() {
+
+    // useEffect( () => {
+    //     async function fetchGameData() {
+    //         try {
+    //             const response = await fetch(`http://145.24.222.137:8000/api/v2/`, {
+    //                 method: "GET",
+    //                 headers: {
+    //                     'Accept': 'application/json',
+    //                     'Content-Type': 'application/json',
+    //                     'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3'
+    //                 },
+    //             })
+    //             const data = await response.json()
+    //             console.log(data)
+    //
+    //         } catch (error) {
+    //             console.error("Error in fetching token", error)
+    //         }
+    //     }
+    //     fetchGameData()
+    // }, []);
+
     const [name, setName] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
@@ -98,7 +120,7 @@ function Profile() {
 
                 {/* Right Side - Statistieken */}
                 <div
-                    className="relative lg:absolute lg:top-40 lg:right-0 bg-IceBlue text-white p-8 rounded-xl lg:rounded-l-xl lg:rounded-r-none shadow-lg w-full max-w-[90%] lg:max-w-[30%] mt-14 lg:mt-0">
+                    className="relative lg:absolute lg:top-40 lg:right-0 bg-IceBlue text-Navy p-8 rounded-xl lg:rounded-l-xl lg:rounded-r-none shadow-lg w-full max-w-[90%] lg:max-w-[30%] mt-14 lg:mt-0">
                     <div className="border-b-2 border-Yellow w-28 mb-4">
                         <h2 className="whitespace-nowrap text-xl font-extrabold">Statistieken</h2>
                     </div>
