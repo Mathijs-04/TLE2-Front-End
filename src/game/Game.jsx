@@ -56,6 +56,7 @@ function GameComponent() {
         } else if (difficulty === "gevorderd") {
              level = 3;
         }
+        const playTime = parseInt(localStorage.getItem('playTime'));
         try {
             const response = await fetch(`http://145.24.222.137:8000/api/v2/scores`, {
                 method: "POST",
@@ -66,7 +67,7 @@ function GameComponent() {
                 },
                 body: JSON.stringify({
                     level: level,
-                    time: localStorage.getItem('playTime'),
+                    time: playTime,
 
                 })
             })
