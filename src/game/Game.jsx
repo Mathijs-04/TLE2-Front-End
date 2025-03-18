@@ -99,18 +99,11 @@ function GameComponent() {
     return (
         <>
             <Navigation />
-            {gameStarted && <HandTrackingComponent onDetect={setDetectedGesture} />}
 
             <div className="flex flex-col items-center justify-start h-screen pt-[5vh] gap-4">
 
             {gameStarted && <HandTrackingComponent onDetect={setDetectedGesture}/>}
-                <canvas
-                    ref={canvasRef}
-                    width={1280}
-                    height={720}
-                    className="border-2 border-black bg-black"
-                    style={{display: gameStarted ? 'block' : 'none'}}
-                />
+
                 {!gameStarted && !showInfoPage &&(
                     <div className="flex flex-col gap-5 items-center">
                         <h2 className="text-navy text-5xl font-nunito font-bold">Selecteer Niveau</h2>
