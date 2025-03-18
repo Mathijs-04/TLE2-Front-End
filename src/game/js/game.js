@@ -128,7 +128,7 @@ export class Game extends Engine {
             pos: new Vector(50, 60),
             font: new Font({
                 size: 32,
-                family: 'Arial',
+                family: "Roboto Mono, monospace",
                 color: Color.White
             }),
             textAlign: TextAlign.Left
@@ -168,11 +168,41 @@ export class Game extends Engine {
             }
         };
 
+
         //development bypass for handdetection with spacebar, remove when live
         window.addEventListener("keydown", (evt) => {
             if (evt.key === "k") {
                 this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
                 this.lettersQueue.shift();
+                this.currentLetter.font.color = Color.Blue;
+
+                setTimeout(() => {
+                    this.currentLetter.font.color = Color.Yellow;
+                }, 1000);
+
+                this.feedbackLabel = new Label({
+                    text: 'Goed gedaan!',
+                    pos: new Vector(680, 520),
+                    font: new Font({
+                        family: "Roboto Mono, monospace",
+                        size: 30,
+                        color: Color.Green
+                    })
+                });
+                this.add(this.feedbackLabel)
+
+                    // Move upward by 50 pixels over 2000ms
+                    this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
+                    // Fade out from full opacity to 0 over 2000ms
+                    this.feedbackLabel.actions.fade(0, 1000)
+
+
+
+                // Once the animation is complete, remove the label from the scene
+
+                callMethod(() => this.feedbackLabel.kill());
+
+
             }
         });
 
@@ -195,9 +225,18 @@ export class Game extends Engine {
             } else {
                 this.currentLetter.text = this.lettersQueue[0].toUpperCase();
                 this.currentLetter.font.color = Color.Green;
+
+                // Delay for 1000 milliseconds (1 second)
+                setTimeout(() => {
+                    // Place additional code here that should run after the delay.
+                    // For example, you might reset the color or update the letter.
+                }, 1000);
             }
+
             this.explanationLabel.text = '';
         } else {
+
+
             // this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
         }
     }
@@ -216,7 +255,7 @@ export class Game extends Engine {
 
     timerInterval = setInterval(() => {
         this.elapsedTime++;
-        if (this.exampleTimer<=5 ) {
+        if (this.exampleTimer <= 5) {
             this.exampleTimer++;
             console.log(this.exampleTimer)
         }
@@ -226,12 +265,6 @@ export class Game extends Engine {
             this.showExample()
         }
     }, 1000);
-
-
-
-
-
-
 
 
     // startNewTimer() {
