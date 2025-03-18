@@ -140,10 +140,6 @@ export class Game extends Engine {
         });
         this.add(this.explanationLabel);
 
-        this.inputEnabled = false;
-        this.countdown = 0;
-        this.timerId = null;
-
         this.keyDownHandler = (evt) => {
             if (evt.key === 'Enter') {
                 if (this.lettersQueue.length > 1) {
@@ -164,17 +160,10 @@ export class Game extends Engine {
         });
 
         window.addEventListener('keydown', this.keyDownHandler);
-        this.startNewTimer();
     }
 
     handleGestureDetection(result) {
-
-
-
-        if (!this.inputEnabled || !result || result.length === 0) {
-            console.log("Input not enabled or no result.");
-            return;
-        }
+        if (!result || result.length === 0 || this.lettersQueue.length === 0) return;
 
         const targetChar = this.lettersQueue[0].toLowerCase();
         const detectedLetters = result.map(([letter]) => letter.toLowerCase());
@@ -188,50 +177,40 @@ export class Game extends Engine {
             } else {
                 this.currentLetter.text = this.lettersQueue[0].toUpperCase();
                 this.currentLetter.font.color = Color.Green;
-
-                this.startNewTimer();
             }
             this.explanationLabel.text = '';
         } else {
-            this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
-            this.startNewTimer();
-            this.currentLetter.font.color = Color.Red;
-
+            // this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
         }
-
-
-
-
-        this.inputEnabled = false;
     }
 
-    startNewTimer() {
-        if (this.timerId) clearInterval(this.timerId);
-
-        this.countdown = 3;
-        this.timerLabel.text = `Time: ${this.countdown}`;
-        this.inputEnabled = false;
-
-        this.timerId = setInterval(() => {
-            this.countdown--;
-            this.timerLabel.text = `Time: ${this.countdown}`;
-
-            if (this.countdown <= 0) {
-                clearInterval(this.timerId);
-                this.inputEnabled = true;
-                this.timerLabel.text = 'Input now!';
-                this.scoreLabel.text = '';
-                this.currentLetter.font.color = Color.Yellow;
-
-            }
-        }, 1000);
-    }
+    // startNewTimer() {
+    //     if (this.timerId) clearInterval(this.timerId);
+    //
+    //     this.countdown = 3;
+    //     this.timerLabel.text = `Time: ${this.countdown}`;
+    //     this.inputEnabled = false;
+    //
+    //     this.timerId = setInterval(() => {
+    //         this.countdown--;
+    //         this.timerLabel.text = `Time: ${this.countdown}`;
+    //
+    //         if (this.countdown <= 0) {
+    //             clearInterval(this.timerId);
+    //             this.inputEnabled = true;
+    //             this.timerLabel.text = 'Input now!';
+    //             this.scoreLabel.text = '';
+    //             this.currentLetter.font.color = Color.Yellow;
+    //
+    //         }
+    //     }, 1000);
+    // }
 
     endGame(snail) {
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
-        this.timerLabel.kill();
+        // this.timerLabel.kill();
         this.scoreLabel.kill();
         this.difficultyLabel.kill();
         this.explanationLabel.kill();

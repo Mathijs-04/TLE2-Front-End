@@ -1,18 +1,14 @@
-import React, {useEffect, useRef} from "react";
-import {FilesetResolver, HandLandmarker} from "@mediapipe/tasks-vision";
+import React, { useEffect, useRef } from "react";
+import { FilesetResolver, HandLandmarker } from "@mediapipe/tasks-vision";
 import KNear from "./handtracker/knear.js";
-import JSONData1 from "./models/dataset1_rechts.json";
-import JSONData2 from "./models/dataset2_rechts.json";
-import JSONData3 from "./models/dataset3_rechts.json";
-import JSONData4 from "./models/dataset4_rechts.json";
-import JSONData5 from "./models/dataset5_rechts.json";
-import JSONData6 from "./models/dataset6_rechts.json";
+import JSONData1 from "./models/allmoveset_rechts.json";
 
-const HandTrackingComponent = ({onDetect}) => {
+const HandTrackingComponent = ({ onDetect }) => {
     const videoRef = useRef(null);
     const handLandmarkerRef = useRef(null);
     const machine = new KNear(1);
-    const files = [JSONData1, JSONData2, JSONData3, JSONData4, JSONData5, JSONData6];
+    const files = [JSONData1];
+    const animationFrameRef = useRef(null);
     const canvasRef = useRef(null);
 
 
@@ -36,16 +32,15 @@ const HandTrackingComponent = ({onDetect}) => {
 
         function startWebcam() {
             console.log("Starting webcam...");
-            navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+            navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
                 if (videoRef.current) {
                     videoRef.current.srcObject = stream;
                     videoRef.current.play();
                     videoRef.current.onloadeddata = () => {
                         console.log("Webcam started. Loading model...");
                         importJSON().then(visualizeHands);
+                        startRealTimeDetection();
                     };
-                } else{
-                    console.error('kaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas 8===>')
                 }
             }).catch((error) => {
                 console.error("Error accessing webcam:", error);
@@ -105,8 +100,7 @@ const HandTrackingComponent = ({onDetect}) => {
             if (files.length > 0) {
                 console.log("Loading training data...");
                 await loadModel(files);
-                console.log("Training data loaded. Starting detection loop...");
-                startDetectionLoop();
+                console.log("Training data loaded.");
             } else {
                 console.error("No training files found.");
             }
@@ -121,55 +115,44 @@ const HandTrackingComponent = ({onDetect}) => {
             }
         }
 
-        async function detectSignLanguageCharacter() {
-            if (!handLandmarkerRef.current) {
-                console.error("Hand tracking model not initialized.");
-                return;
-            }
+        async function processFrame() {
+            if (!handLandmarkerRef.current || !videoRef.current) return;
 
-            const frameInterval = 20;
-            const numFrames = 50;
-            let collectedData = [];
+            const results = await handLandmarkerRef.current.detectForVideo(videoRef.current, performance.now());
+            let detectArray = [];
 
-            console.log("Starting gesture detection...");
-            for (let i = 0; i < numFrames; i++) {
-                const results = await handLandmarkerRef.current.detectForVideo(videoRef.current, performance.now());
-                let detectArray = [];
-
-                for (let hand of results.landmarks) {
-                    const wrist = hand[0];
-                    for (let handSingle of hand) {
-                        let relX = handSingle.x - wrist.x;
-                        let relY = handSingle.y - wrist.y;
-                        let relZ = handSingle.z - wrist.z;
-                        detectArray.push([relX, relY, relZ]);
-                    }
+            for (let hand of results.landmarks) {
+                const wrist = hand[0];
+                for (let handSingle of hand) {
+                    let relX = handSingle.x - wrist.x;
+                    let relY = handSingle.y - wrist.y;
+                    let relZ = handSingle.z - wrist.z;
+                    detectArray.push([relX, relY, relZ]);
                 }
-
-                collectedData.push(detectArray);
-                await new Promise(resolve => setTimeout(resolve, frameInterval));
             }
 
-            const flattenedData = collectedData.flat(Infinity);
-            if (flattenedData.length > 0) {
-                const result = machine.findNearest(flattenedData, 6);
-                console.log("Gesture detection result:", result);
+            if (detectArray.length > 0) {
+                const flattenedData = detectArray.flat();
+                const result = machine.findNearest(flattenedData, 2);
+                // console.log(result);
                 if (onDetect) onDetect(result);
-            } else {
-                console.error("No data collected for gesture detection.");
             }
+
+            animationFrameRef.current = requestAnimationFrame(processFrame);
         }
 
-        async function startDetectionLoop() {
-            console.log("Starting detection loop...");
-            while (true) {
-                await detectSignLanguageCharacter();
-                console.log("Waiting 3 seconds for next detection...");
-                await new Promise(resolve => setTimeout(resolve, 3000));
-            }
+        function startRealTimeDetection() {
+            console.log("Starting real-time detection...");
+            animationFrameRef.current = requestAnimationFrame(processFrame);
         }
 
         initializeHandTracking();
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
     }, []);
 
     return (
@@ -194,7 +177,6 @@ const HandTrackingComponent = ({onDetect}) => {
                 }}
             ></canvas>
         </div>
-
     );
 };
 
