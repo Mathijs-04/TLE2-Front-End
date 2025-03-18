@@ -29,14 +29,51 @@ function GameComponent() {
         setGameEnded(false);
     };
 
+    const fetchGameData = async () => {
+        let level;
+        if (difficulty === "beginner") {
+             level = 1;
+        } else if (difficulty === "gemiddeld") {
+             level = 2;
+        } else if (difficulty === "gevorderd") {
+             level = 3;
+        }
+        try {
+            const response = await fetch(`http://145.24.222.137:8000/api/v2/scores`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3'
+                },
+                body: JSON.stringify({
+                    level: level,
+                    time: localStorage.getItem('playTime'),
+
+                })
+            })
+            const data = await response.json()
+            console.log(data)
+            localStorage.removeItem('playTime')
+        } catch (error) {
+            console.error("Error in fetching token", error)
+        }
+
+    }
+
     const restartGame = () => {
+        fetchGameData();
+
         setGameEnded(false);
         if (gameRef.current) gameRef.current.stop();
         gameRef.current = new Game(canvasRef.current, difficulty, () => setGameEnded(true));
         gameRef.current.start();
     };
 
+
     const returnToMenu = () => {
+        fetchGameData();
+
         setGameStarted(false);
         setGameEnded(false);
         if (gameRef.current) gameRef.current.stop();
@@ -77,13 +114,12 @@ function GameComponent() {
     }
 
 
-
     return (
         <>
             <Navigation/>
             <div className="flex flex-col items-center justify-start h-screen pt-[5vh] gap-4">
 
-            {gameStarted && <HandTrackingComponent onDetect={setDetectedGesture}/>}
+                {gameStarted && <HandTrackingComponent onDetect={setDetectedGesture}/>}
                 <canvas
                     ref={canvasRef}
                     width={1280}
