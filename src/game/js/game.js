@@ -64,6 +64,7 @@ export class Game extends Engine {
         };
 
         const shuffledValues = retrieveAndShuffleValues();
+        console.log(shuffledValues);
         this.lettersQueue = shuffledValues;
 
         this.currentLetter = new Label({
@@ -159,7 +160,7 @@ export class Game extends Engine {
 
         const targetChar = this.lettersQueue[0].toLowerCase();
         const detectedLetters = result.map(([letter]) => letter.toLowerCase());
-
+        console.log(`Detected letters: ${detectedLetters}`);
         if (detectedLetters.includes(targetChar)) {
             this.snail.pos.x += 55;
             this.lettersQueue.shift();
