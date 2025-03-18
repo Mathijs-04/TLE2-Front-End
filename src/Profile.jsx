@@ -37,11 +37,11 @@ function Profile() {
             <Navigation/>
 
             <main
-                className="flex flex-col lg:items-start items-center lg:flex-row justify-center min-h-screen relative">
+                className="flex flex-col font-nunito lg:items-start items-center lg:flex-row justify-center min-h-screen relative">
 
                 {/* Center - Welcome & Student Info */}
                 <div
-                    className="text-Navy font-nunito text-center w-full max-w-sm lg:max-w-lg break-words mt-8 lg:mt-32">
+                    className="text-Navy text-center w-full max-w-sm lg:max-w-lg break-words mt-8 lg:mt-32">
                     <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">Welkom,</h1>
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mt-4">
                         {nameParts[0].split("(")[0]}
@@ -56,14 +56,38 @@ function Profile() {
 
                 {/* Left Side - Recente Games */}
                 <div
-                    className="relative lg:absolute lg:top-40 lg:left-0 bg-SlateBlue text-white p-8 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[90%] lg:max-w-[30%] mt-14 lg:mt-0">
+                    className="relative lg:absolute lg:top-8 lg:left-0 bg-SlateBlue text-white p-8 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[90%] lg:max-w-[30%] mt-14 lg:mt-0">
                     <div className="border-b-2 border-Yellow w-28 mb-4">
-                        <h2 className="whitespace-nowrap text-xl lg:text-2xl font-nunito font-extrabold">Recente
+                        <h2 className="whitespace-nowrap text-xl lg:text-2xl font-extrabold">Recente
                             games</h2>
                     </div>
-                    <ul className="text-xl space-y-2 mb-2">
-                        {Array.from({length: 5}).map((_, i) => (
-                            <li key={i} className="flex justify-between border-b pb-1">
+                    <ul className="text-xl font-extrabold space-y-2 mb-2">
+                        Beginner
+                        <br/>
+                        {Array.from({length: 3}).map((_, i) => (
+                            <li key={i} className="flex font-medium justify-between border-b pb-1">
+                                <span className="italic">Game {i + 1}</span>
+                                <span>00:02:45</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <br/>
+                    <ul className="text-xl font-extrabold space-y-2 mb-2">
+                        Gemiddeld
+                        <br/>
+                        {Array.from({length: 3}).map((_, i) => (
+                            <li key={i} className="flex font-medium justify-between border-b pb-1">
+                                <span className="italic">Game {i + 1}</span>
+                                <span>00:02:45</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <br/>
+                    <ul className="text-xl font-extrabold space-y-2 mb-2">
+                        Gevorderd
+                        <br/>
+                        {Array.from({length: 3}).map((_, i) => (
+                            <li key={i} className="flex font-medium justify-between border-b pb-1">
                                 <span className="italic">Game {i + 1}</span>
                                 <span>00:02:45</span>
                             </li>
@@ -76,7 +100,7 @@ function Profile() {
                 <div
                     className="relative lg:absolute lg:top-40 lg:right-0 bg-IceBlue text-white p-8 rounded-xl lg:rounded-l-xl lg:rounded-r-none shadow-lg w-full max-w-[90%] lg:max-w-[30%] mt-14 lg:mt-0">
                     <div className="border-b-2 border-Yellow w-28 mb-4">
-                        <h2 className="whitespace-nowrap text-xl font-nunito font-extrabold">Statistieken</h2>
+                        <h2 className="whitespace-nowrap text-xl font-extrabold">Statistieken</h2>
                     </div>
                     <div className="grid grid-cols-2 gap-1">
                         {[
