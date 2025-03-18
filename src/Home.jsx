@@ -54,8 +54,8 @@ function Home() {
         <>
             <Navigation />
 
-            <main className="flex flex-col items-center justify-start min-h-screen bg-cream relative pt-20">
-                <h1 className="text-Navy font-nunito font-extrabold text-4xl sm:text-5xl lg:text-6xl sm:mt-0 lg:mt-28 mb-14">
+            <main className="flex flex-col items-center font-nunito justify-start min-h-screen bg-cream relative pt-20">
+                <h1 className="text-Navy font-extrabold text-4xl sm:text-5xl lg:text-6xl sm:mt-0 lg:mt-28 mb-14">
                     Gebaren Game
                 </h1>
 
