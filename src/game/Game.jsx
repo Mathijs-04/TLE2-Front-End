@@ -112,16 +112,18 @@ function GameComponent() {
                     </div>
                 )}
                 {gameEnded && (
-                    <div className="flex flex-col gap-5 items-center">
-                        <div className="flex gap-4">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+        bg-white p-12 w-[500px] rounded-2xl shadow-2xl flex flex-col items-center">
+                        <h3 className="text-4xl font-bold text-Navy mb-6">Game Over!</h3>
+                        <div className="flex flex-col gap-6 w-full">
                             <button
                                 onClick={restartGame}
-                                className="bg-DuskBlue w-80 text-white text-2xl font-nunito font-bold px-8 py-4 rounded-lg shadow-lg outline-black outline-2 hover:bg-[#4F6490] transition">
+                                className="bg-DuskBlue w-full text-white text-3xl font-nunito font-bold px-10 py-5 rounded-xl shadow-lg outline-black outline-2 hover:bg-[#4F6490] transition">
                                 Speel opnieuw
                             </button>
                             <button
                                 onClick={returnToMenu}
-                                className="bg-DuskBlue w-80 text-white text-2xl font-nunito font-bold px-8 py-4 rounded-lg shadow-lg outline-black outline-2 hover:bg-[#4F6490] transition">
+                                className="bg-DuskBlue w-full text-white text-3xl font-nunito font-bold px-10 py-5 rounded-xl shadow-lg outline-black outline-2 hover:bg-[#4F6490] transition">
                                 Ander level
                             </button>
                         </div>
