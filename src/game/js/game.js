@@ -82,8 +82,8 @@ export class Game extends Engine {
             pos: new Vector(50, 20), // Position on screen
             font: new Font({
                 size: 32,
-                family: "Arial",
-                color: Color.White,
+                family: "Roboto Mono, monospace",
+                color: Color.Black,
             }),
             textAlign: TextAlign.Left,
         });
