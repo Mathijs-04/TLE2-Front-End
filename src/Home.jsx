@@ -78,13 +78,13 @@ function Home() {
 
                 {isPopupOpen && (
                     <div
-                        className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 p-4 z-50 overflow-y-auto"
+                        className="fixed inset-0 flex flex-col font-nunito items-center justify-center bg-black bg-opacity-50 p-4 z-50 overflow-y-auto"
                         role="dialog"
                         aria-modal="true"
                         aria-labelledby="popup-title"
                     >
                         <div className="bg-white text-Navy p-8 rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto text-center">
-                            <h2 id="popup-title" className="text-4xl font-extrabold mb-10">INFORMATIE</h2>
+                            <h2 id="popup-title" className="text-5xl border-b-4 border-Yellow w-56 font-black font-nunito mb-10">INFORMATIE</h2>
                             <p className="text-2xl mb-5">
                                 In dit spel kan jij door middel van jouw camera oefenen met vingerspellen.
                                 Help de slak naar de finish door de juiste handvormen aan te nemen!
