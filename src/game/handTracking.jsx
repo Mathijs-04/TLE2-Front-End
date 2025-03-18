@@ -67,9 +67,6 @@ const HandTrackingComponent = ({ onDetect }) => {
         }
 
         function drawHand(landmarks, ctx, canvas) {
-            // functie om de hand posities te visualiseren
-            ctx.fillStyle = "red";
-            ctx.strokeStyle = "green";
             ctx.lineWidth = 2;
 
             const connections = [
@@ -81,7 +78,38 @@ const HandTrackingComponent = ({ onDetect }) => {
                 [5, 9], [9, 13], [13, 17]
             ];
 
+            // Find unique Z values for knuckles
+            let zGroups = {};
+            landmarks.forEach(p => {
+                let roundedZ = Math.round(p.z * 10) / 10; // Round to 1 decimal for grouping
+                if (!zGroups[roundedZ]) {
+                    zGroups[roundedZ] = [];
+                }
+                zGroups[roundedZ].push(p);
+            });
+
+            // Get sorted Z depth levels (planes)
+            let sortedZKeys = Object.keys(zGroups).map(Number).sort((a, b) => a - b);
+            let minZ = sortedZKeys[0];
+            let maxZ = sortedZKeys[sortedZKeys.length - 1];
+
+            function getAlpha(z) {
+                // Assign same alpha for all points in the same depth group
+                let normalizedZ = (z - minZ) / (maxZ - minZ);
+                return Math.max(0.2, 1 - normalizedZ); // At least 20% opacity
+            }
+
+            let depthAlpha = {};
+            sortedZKeys.forEach(z => {
+                depthAlpha[z] = getAlpha(z);
+            });
+
             connections.forEach(([start, end]) => {
+                let zStart = Math.round(landmarks[start].z * 10) / 10;
+                let zEnd = Math.round(landmarks[end].z * 10) / 10;
+                let alpha = (depthAlpha[zStart] + depthAlpha[zEnd]) / 2; // Average of the two depths
+
+                ctx.strokeStyle = `rgba(0, 255, 0, ${alpha})`; // Green lines with transparency
                 ctx.beginPath();
                 ctx.moveTo(landmarks[start].x * canvas.width, landmarks[start].y * canvas.height);
                 ctx.lineTo(landmarks[end].x * canvas.width, landmarks[end].y * canvas.height);
@@ -89,6 +117,10 @@ const HandTrackingComponent = ({ onDetect }) => {
             });
 
             landmarks.forEach(point => {
+                let zGroup = Math.round(point.z * 10) / 10;
+                let alpha = depthAlpha[zGroup];
+
+                ctx.fillStyle = `rgba(255, 0, 0, ${alpha})`; // Red circles with transparency
                 ctx.beginPath();
                 ctx.arc(point.x * canvas.width, point.y * canvas.height, 5, 0, Math.PI * 2);
                 ctx.fill();
