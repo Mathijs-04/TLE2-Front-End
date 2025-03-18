@@ -42,9 +42,10 @@ const HandTrackingComponent = ({onDetect}) => {
                     videoRef.current.play();
                     videoRef.current.onloadeddata = () => {
                         console.log("Webcam started. Loading model...");
-                        importJSON();
-                        visualizeHands();
+                        importJSON().then(visualizeHands);
                     };
+                } else{
+                    console.error('kaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaas 8===>')
                 }
             }).catch((error) => {
                 console.error("Error accessing webcam:", error);

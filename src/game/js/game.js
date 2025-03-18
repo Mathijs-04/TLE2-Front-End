@@ -142,7 +142,7 @@ export class Game extends Engine {
                 if (this.lettersQueue.length > 1) {
                     this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
                     this.currentLetter.text = this.lettersQueue[0].toUpperCase();
-                    this.snail.pos.x += 55 * 25;
+                    this.snail.pos.x += 46 * 25;
                     console.log("Skipped to the last letter.");
                 }
             }
@@ -162,7 +162,7 @@ export class Game extends Engine {
         const detectedLetters = result.map(([letter]) => letter.toLowerCase());
         console.log(`Detected letters: ${detectedLetters}`);
         if (detectedLetters.includes(targetChar)) {
-            this.snail.pos.x += 55;
+            this.snail.pos.x += 46;
             this.lettersQueue.shift();
 
             if (this.lettersQueue.length === 0) {
