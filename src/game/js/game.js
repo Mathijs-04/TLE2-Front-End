@@ -49,6 +49,7 @@ export class Game extends Engine {
 
         console.log("Starting game...");
         this.elapsedTime = 0; // Keeps track of elapsed seconds
+        this.exampleTimer = 0; // Keeps track of elapsed seconds
 
 
         this.snail = new Actor();
@@ -201,10 +202,37 @@ export class Game extends Engine {
         }
     }
 
-        timerInterval = setInterval(() => {
-            this.elapsedTime++;
-            this.timerLabel.text = `Time: ${this.elapsedTime}s`;
-        }, 1000);
+    showExample() {
+        console.log('example showing')
+        this.fish = new Actor();
+
+        this.fish.graphics.use(Resources.Fish.toSprite());
+
+        this.fish.pos = new Vector(0, 300);
+        this.fish.scale = new Vector(0.5, 0.5);
+        this.add(this.fish);
+
+    }
+
+    timerInterval = setInterval(() => {
+        this.elapsedTime++;
+        if (this.exampleTimer<=5 ) {
+            this.exampleTimer++;
+            console.log(this.exampleTimer)
+        }
+
+        this.timerLabel.text = `Time: ${this.elapsedTime}s`;
+        if (this.exampleTimer === 5) {
+            this.showExample()
+        }
+    }, 1000);
+
+
+
+
+
+
+
 
     // startNewTimer() {
     //     if (this.timerId) clearInterval(this.timerId);
@@ -254,4 +282,5 @@ export class Game extends Engine {
             if (this.onGameEnd) this.onGameEnd();
         }, 1);
     }
+
 }
