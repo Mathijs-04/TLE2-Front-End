@@ -48,6 +48,9 @@ export class Game extends Engine {
 
 
         console.log("Starting game...");
+        this.elapsedTime = 0; // Keeps track of elapsed seconds
+
+
         this.snail = new Actor();
 
         this.difficultyCheck()
@@ -74,6 +77,19 @@ export class Game extends Engine {
         console.log(shuffledValues);
         this.lettersQueue = shuffledValues;
 
+        this.timerLabel = new Label({
+            text: `Time: ${this.elapsedTime}s`,
+            pos: new Vector(50, 20), // Position on screen
+            font: new Font({
+                size: 32,
+                family: "Arial",
+                color: Color.White,
+            }),
+            textAlign: TextAlign.Left,
+        });
+        this.add(this.timerLabel);
+
+
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
             pos: new Vector(610, 540),
@@ -93,19 +109,18 @@ export class Game extends Engine {
         this.add(this.currentLetter);
 
 
-        this.timerLabel = new Label({
-            text: 'Time: 3',
-            pos: new Vector(510, 510),
-            font: new Font({
-                size: 26,
-                family: "Roboto Mono, monospace",
-                color: Color.White
-            }),
-            textAlign: TextAlign.Center
-
-        });
-
-        this.add(this.timerLabel);
+        // this.timerLabel = new Label({
+        //     text: 'Time: 3',
+        //     pos: new Vector(510, 510),
+        //     font: new Font({
+        //         size: 26,
+        //         family: "Roboto Mono, monospace",
+        //         color: Color.White
+        //     }),
+        //     textAlign: TextAlign.Center
+        //
+        // });
+        // this.add(this.timerLabel);
 
         this.scoreLabel = new Label({
             text: '',
@@ -113,7 +128,8 @@ export class Game extends Engine {
             font: new Font({
                 size: 32,
                 family: 'Arial',
-                color: Color.White}),
+                color: Color.White
+            }),
             textAlign: TextAlign.Left
         });
         this.add(this.scoreLabel);
@@ -162,6 +178,7 @@ export class Game extends Engine {
         window.addEventListener('keydown', this.keyDownHandler);
     }
 
+
     handleGestureDetection(result) {
         if (!result || result.length === 0 || this.lettersQueue.length === 0) return;
 
@@ -183,6 +200,11 @@ export class Game extends Engine {
             // this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
         }
     }
+
+        timerInterval = setInterval(() => {
+            this.elapsedTime++;
+            this.timerLabel.text = `Time: ${this.elapsedTime}s`;
+        }, 1000);
 
     // startNewTimer() {
     //     if (this.timerId) clearInterval(this.timerId);
@@ -206,7 +228,11 @@ export class Game extends Engine {
     //     }, 1000);
     // }
 
+
     endGame(snail) {
+        clearInterval(this.timerInterval); // Stops the timer
+
+
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
         this.currentLetter.kill();
@@ -214,6 +240,7 @@ export class Game extends Engine {
         this.scoreLabel.kill();
         this.difficultyLabel.kill();
         this.explanationLabel.kill();
+
 
         const endLabel = new Label({
             text: 'Game Ended',
