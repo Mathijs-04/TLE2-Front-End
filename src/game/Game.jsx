@@ -23,6 +23,8 @@ function GameComponent() {
     const [difficulty, setDifficulty] = useState(null);
     const gameRef = useRef(null);
     const [detectedGesture, setDetectedGesture] = useState(null);
+    const [playTime, setPlayTime] = useState(null);
+
 
     // Difficulty-specific information
     const difficultyInfo = {
@@ -45,6 +47,8 @@ function GameComponent() {
         setGameStarted(true);
         setGameEnded(false);
         setShowInfoPage(false);
+        setPlayTime(null); // Reset playtime before starting
+
     };
 
     const fetchGameData = async () => {
@@ -99,10 +103,18 @@ function GameComponent() {
         fetchGameData();
 
         setGameEnded(false);
+        setPlayTime(null);
         if (gameRef.current) gameRef.current.stop();
-        gameRef.current = new Game(canvasRef.current, difficulty, () => setGameEnded(true));
+        gameRef.current = new Game(canvasRef.current, difficulty, () => {
+            const endTime = Date.now();
+            const timeTaken = ((endTime - gameRef.current.startTime) / 1000).toFixed(2);
+            setPlayTime(timeTaken);
+            setGameEnded(true);
+        });
         gameRef.current.start();
+        gameRef.current.startTime = Date.now(); // Store game start time
     };
+
 
     const returnToMenu = () => {
         fetchGameData();
@@ -113,13 +125,32 @@ function GameComponent() {
         if (gameRef.current) gameRef.current.stop();
     };
 
+    const toProfile = () => {
+        fetchGameData(); // Ensure game data is saved before navigating
+        setGameStarted(false);
+        setGameEnded(false);
+        setShowInfoPage(false);
+        if (gameRef.current) gameRef.current.stop();
+
+        navigate('/profile'); // Navigate to profile page
+    };
+
+
+
     useEffect(() => {
         if (gameStarted && difficulty && !gameEnded) {
             if (gameRef.current) gameRef.current.stop();
-            gameRef.current = new Game(canvasRef.current, difficulty, () => setGameEnded(true));
+            gameRef.current = new Game(canvasRef.current, difficulty, () => {
+                const endTime = Date.now();
+                const timeTaken = ((endTime - gameRef.current.startTime) / 1000).toFixed(2);
+                setPlayTime(timeTaken);
+                setGameEnded(true);
+            });
             gameRef.current.start();
+            gameRef.current.startTime = Date.now(); // Store game start time
         }
     }, [gameStarted, difficulty, gameEnded]);
+
 
     useEffect(() => {
         if (gameRef.current && detectedGesture) {
@@ -216,8 +247,9 @@ function GameComponent() {
 
                 {gameEnded && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-                        bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
+        bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
                         <h3 className="text-3xl font-bold text-Navy mb-4">Finish!</h3>
+                        {playTime && <p className="text-lg font-semibold text-gray-700 mb-4">Jouw tijd: {playTime} seconden</p>}
                         <button
                             onClick={restartGame}
                             className="bg-DuskBlue w-full max-w-[250px] text-white text-lg font-nunito font-bold px-4 py-2 rounded-lg shadow-lg hover:bg-[#4F6490] transition focus:ring-2 focus:ring-blue-400">
@@ -228,8 +260,15 @@ function GameComponent() {
                             className="bg-DuskBlue w-full max-w-[250px] text-white text-lg font-nunito font-bold px-4 py-2 rounded-lg shadow-lg hover:bg-[#4F6490] transition focus:ring-2 focus:ring-blue-400 mt-4">
                             Ander level
                         </button>
+                        <button
+                            onClick={toProfile}
+                            className="bg-DuskBlue w-full max-w-[250px] text-white text-lg font-nunito font-bold px-4 py-2 rounded-lg shadow-lg hover:bg-[#4F6490] transition focus:ring-2 focus:ring-blue-400 mt-4">
+                            Naar Profiel
+                        </button>
+
                     </div>
                 )}
+
             </div>
         </>
     );
