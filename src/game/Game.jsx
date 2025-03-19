@@ -7,7 +7,6 @@ import HandTrackingComponent from "./handTracking.jsx";
 function GameComponent() {
     const navigate = useNavigate();
     const location = useLocation();
-
     useEffect(() => {
         const token = localStorage.getItem("token");
         const currentUrl = location.pathname;
@@ -48,7 +47,57 @@ function GameComponent() {
         setShowInfoPage(false);
     };
 
+    const fetchGameData = async () => {
+        let level;
+        if (difficulty === "beginner") {
+             level = 1;
+        } else if (difficulty === "gemiddeld") {
+             level = 2;
+        } else if (difficulty === "gevorderd") {
+             level = 3;
+        }
+        console.log(level)
+        console.table(localStorage)
+        try {
+            const playTime = parseInt(localStorage.getItem('playTime'));
+
+            const response = await fetch(`http://145.24.222.137:8000/api/v2/scores`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+
+                },
+                body: JSON.stringify({
+                    level: level,
+                    time: playTime,
+
+                })
+            })
+            const getStats = await fetch(`http://145.24.222.137:8000/api/v2/scores`, {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
+            const data = await getStats.json()
+            console.log(data)
+            localStorage.removeItem('playTime');
+            console.log(localStorage.getItem('playTime'))
+        } catch (error) {
+            console.error("Error in fetching token", error)
+        }
+
+    }
+
     const restartGame = () => {
+        fetchGameData();
+
         setGameEnded(false);
         if (gameRef.current) gameRef.current.stop();
         gameRef.current = new Game(canvasRef.current, difficulty, () => setGameEnded(true));
@@ -56,6 +105,8 @@ function GameComponent() {
     };
 
     const returnToMenu = () => {
+        fetchGameData();
+
         setGameStarted(false);
         setGameEnded(false);
         setShowInfoPage(false);
@@ -166,7 +217,7 @@ function GameComponent() {
                 {gameEnded && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                         bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
-                        <h3 className="text-3xl font-bold text-Navy mb-4">Game Over!</h3>
+                        <h3 className="text-3xl font-bold text-Navy mb-4">Finish!</h3>
                         <button
                             onClick={restartGame}
                             className="bg-DuskBlue w-full max-w-[250px] text-white text-lg font-nunito font-bold px-4 py-2 rounded-lg shadow-lg hover:bg-[#4F6490] transition focus:ring-2 focus:ring-blue-400">
