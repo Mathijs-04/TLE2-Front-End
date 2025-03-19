@@ -48,22 +48,56 @@ const HandTrackingComponent = ({ onDetect }) => {
         }
 
         async function visualizeHands() {
-            // DEBUG Functie kan uit kost volgens mij veel performance
-            if (!handLandmarkerRef.current || !videoRef.current || !canvasRef.current) return;
+            if (!handLandmarkerRef.current || !videoRef.current || !canvasRef.current) {
+                console.warn("HandLandmarker, video of canvas niet beschikbaar.");
+                return;
+            }
 
             const ctx = canvasRef.current.getContext("2d");
             ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
-            const results = await handLandmarkerRef.current.detectForVideo(videoRef.current, performance.now());
+            // Controleer of de video geldige afmetingen heeft
+            const videoWidth = videoRef.current.videoWidth;
+            const videoHeight = videoRef.current.videoHeight;
 
-            if (results.landmarks.length > 0) {
-                for (let hand of results.landmarks) {
-                    // roept de visualisatie functie aan
-                    drawHand(hand, ctx, canvasRef.current);
-                }
+            if (videoWidth === 0 || videoHeight === 0) {
+                console.error("Video heeft ongeldige afmetingen (0x0).");
+                return;
             }
 
-            requestAnimationFrame(visualizeHands);
+            try {
+                const results = await handLandmarkerRef.current.detectForVideo(videoRef.current, performance.now());
+
+                // Extra controle: zijn er handen gedetecteerd?
+                if (!results || !results.landmarks || results.landmarks.length === 0) {
+                    console.warn("Geen hand gedetecteerd, detectie wordt overgeslagen.");
+                    return;
+                }
+
+                for (let i = 0; i < results.landmarks.length; i++) {
+                    const hand = results.landmarks[i];
+
+                    if (!hand || hand.length === 0) {
+                        console.warn(`Hand #${i} heeft geen geldige landmarks, wordt overgeslagen.`);
+                        continue;
+                    }
+
+                    // Valideer de bounding box (ROI)
+                    const roi = results.worldLandmarks?.[i]?.boundingBox;
+                    if (!roi || roi.width <= 0 || roi.height <= 0) {
+                        console.error(`Hand #${i} heeft een ongeldige ROI, wordt overgeslagen.`, roi);
+                        continue;
+                    }
+
+                    // Roept de visualisatie functie aan
+                    drawHand(hand, ctx, canvasRef.current);
+                }
+            } catch (error) {
+                console.error("Fout bij het verwerken van hand detectie:", error);
+            }
+
+            // Vermijd eindeloze lus met kapotte frames
+            setTimeout(() => requestAnimationFrame(visualizeHands), 100);
         }
 
         function drawHand(landmarks, ctx, canvas) {
