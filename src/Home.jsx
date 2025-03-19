@@ -115,19 +115,19 @@ function Home() {
                     </div>
                 )}
 
-                <div className="relative lg:absolute lg:top-40 lg:right-0 bg-Navy text-white p-8 rounded-xl lg:rounded-l-xl lg:rounded-r-none shadow-lg w-full max-w-xs lg:max-w-72 mt-14 lg:mt-0">
-                    <div className="border-b-2 border-Yellow w-28 mb-4">
-                        <h2 className="whitespace-nowrap text-xl font-nunito font-extrabold">Recente games</h2>
-                    </div>
-                    <ul className="text-xl space-y-2 mb-2">
-                        {Array.from({ length: 8 }).map((_, i) => (
-                            <li key={i} className="flex justify-between border-b pb-1">
-                                <span className="italic">John Doe</span>
-                                <span>00:03:23</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                {/*<div className="relative lg:absolute lg:top-40 lg:right-0 bg-Navy text-white p-8 rounded-xl lg:rounded-l-xl lg:rounded-r-none shadow-lg w-full max-w-xs lg:max-w-72 mt-14 lg:mt-0">*/}
+                {/*    <div className="border-b-2 border-Yellow w-28 mb-4">*/}
+                {/*        <h2 className="whitespace-nowrap text-xl font-nunito font-extrabold">Recente games</h2>*/}
+                {/*    </div>*/}
+                {/*    <ul className="text-xl space-y-2 mb-2">*/}
+                {/*        {Array.from({ length: 8 }).map((_, i) => (*/}
+                {/*            <li key={i} className="flex justify-between border-b pb-1">*/}
+                {/*                <span className="italic">John Doe</span>*/}
+                {/*                <span>00:03:23</span>*/}
+                {/*            </li>*/}
+                {/*        ))}*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
             </main>
         </>
     );
