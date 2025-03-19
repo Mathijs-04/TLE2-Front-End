@@ -54,18 +54,31 @@ function Alphabet() {
                 <div
                     className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4">
 
-                    {images.map((image, index) => (
-                        <div
-                            key={index}
-                            className="flex justify-center bg-IceBlue h-32 rounded-lg p-4"
-                        >
-                            <img className="max-h-20 md:max-h-32 lg:max-h-40 w-auto"
-                                 src={image}
-                                 alt={`Afbeelding ${index + 1}`}
-                            />
+                    {images.map((image, index) => {
+                        // Extract the filename from the image URL
+                        const fullName = image.split('/').pop(); // e.g., "example.png"
+                        // Remove the ".png" extension from the file name
+                        const imageName = fullName.replace('.png', '');
 
-                        </div>
-                    ))}
+                        return (
+                            <div
+                                key={index}
+                                className="flex justify-center bg-IceBlue h-32 rounded-lg p-4"
+                            >
+                                <img
+                                    className="max-h-20 md:max-h-32 lg:max-h-40 w-auto"
+                                    src={image}
+                                    alt={`Afbeelding ${index + 1}`}
+                                    style={{ transform: 'scaleX(-1)' }} // Flips the image horizontally
+                                />
+                                <br />
+                                <p className="text-end text-Navy font-nunito font-bold text-2xl">{imageName}</p>
+                            </div>
+
+                        );
+                    })}
+
+
                 </div>
 
             </main>
