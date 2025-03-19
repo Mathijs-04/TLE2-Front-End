@@ -15,6 +15,7 @@ export class Game extends Engine {
 
         this.difficulty = difficulty;
         this.onGameEnd = onGameEnd;
+
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
@@ -49,6 +50,7 @@ export class Game extends Engine {
 
         console.log("Starting game...");
         this.elapsedTime = 0; // Keeps track of elapsed seconds
+        this.exampleTimer = 0; // Keeps track of elapsed seconds
 
 
         this.snail = new Actor();
@@ -82,8 +84,8 @@ export class Game extends Engine {
             pos: new Vector(50, 20), // Position on screen
             font: new Font({
                 size: 32,
-                family: "Arial",
-                color: Color.White,
+                family: "Roboto Mono, monospace",
+                color: Color.Black,
             }),
             textAlign: TextAlign.Left,
         });
@@ -127,7 +129,7 @@ export class Game extends Engine {
             pos: new Vector(50, 60),
             font: new Font({
                 size: 32,
-                family: 'Arial',
+                family: "Roboto Mono, monospace",
                 color: Color.White
             }),
             textAlign: TextAlign.Left
@@ -167,11 +169,41 @@ export class Game extends Engine {
             }
         };
 
+
         //development bypass for handdetection with spacebar, remove when live
         window.addEventListener("keydown", (evt) => {
             if (evt.key === "k") {
                 this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
                 this.lettersQueue.shift();
+                this.currentLetter.font.color = Color.Blue;
+
+                setTimeout(() => {
+                    this.currentLetter.font.color = Color.Yellow;
+                    this.feedbackLabel.kill();
+
+                }, 2000);
+
+                this.feedbackLabel = new Label({
+                    text: 'Goed gedaan!',
+                    pos: new Vector(680, 520),
+                    font: new Font({
+                        family: "Roboto Mono, monospace",
+                        size: 30,
+                        color: Color.Green
+                    })
+                });
+                this.add(this.feedbackLabel)
+
+                // Move upward by 50 pixels over 2000ms
+                this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
+                // Fade out from full opacity to 0 over 2000ms
+                this.feedbackLabel.actions.fade(0, 1000)
+
+
+                // Once the animation is complete, remove the label from the scene
+
+
+
             }
         });
 
@@ -194,17 +226,62 @@ export class Game extends Engine {
             } else {
                 this.currentLetter.text = this.lettersQueue[0].toUpperCase();
                 this.currentLetter.font.color = Color.Green;
+                this.exampleLetter.kill();
+                this.exampleTimer = 0;
+
+
+                // Delay for 1000 milliseconds (1 second)
+                setTimeout(() => {
+                    // Place additional code here that should run after the delay.
+                    // For example, you might reset the color or update the letter.
+                }, 1000);
             }
+
             this.explanationLabel.text = '';
         } else {
+
+
             // this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
         }
     }
 
-        timerInterval = setInterval(() => {
-            this.elapsedTime++;
-            this.timerLabel.text = `Time: ${this.elapsedTime}s`;
-        }, 1000);
+
+
+    showExample() {
+        console.log('example showing')
+        this.exampleLetter = new Actor();
+
+        let targetLetter = this.lettersQueue[0];
+        console.log(targetLetter);
+
+        let resourceKey = `letter${targetLetter.toUpperCase()}`; // e.g., "letterB"
+        this.exampleLetter.graphics.use(Resources[resourceKey].toSprite());
+
+
+
+
+        this.exampleLetter.pos = new Vector(210, 590);
+        this.exampleLetter.scale = new Vector(1, 1);
+        this.exampleLetter.graphics.flipHorizontal = true;
+        this.exampleLetter.graphics.color = Color.White;
+
+        this.add(this.exampleLetter);
+
+    }
+
+    timerInterval = setInterval(() => {
+        this.elapsedTime++;
+        if (this.exampleTimer <= 5) {
+            this.exampleTimer++;
+            console.log(this.exampleTimer)
+        }
+
+        this.timerLabel.text = `Time: ${this.elapsedTime}s`;
+        if (this.exampleTimer === 1) {
+            this.showExample()
+        }
+    }, 1000);
+
 
     // startNewTimer() {
     //     if (this.timerId) clearInterval(this.timerId);
@@ -256,4 +333,5 @@ export class Game extends Engine {
             if (this.onGameEnd) this.onGameEnd();
         }, 1);
     }
+
 }
