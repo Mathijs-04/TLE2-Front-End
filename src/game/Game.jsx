@@ -57,6 +57,7 @@ function GameComponent() {
              level = 3;
         }
         console.log(level)
+        console.table(localStorage)
         try {
             const playTime = parseInt(localStorage.getItem('playTime'));
 
