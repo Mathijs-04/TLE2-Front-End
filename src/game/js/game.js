@@ -16,10 +16,14 @@ export class Game extends Engine {
         this.difficulty = difficulty;
         this.onGameEnd = onGameEnd;
 
+
         this.start(ResourceLoader).then(() => this.startGame());
+
     }
 
-
+    // countdown(){
+    //
+    // }
 
 
     difficultyCheck() {
@@ -28,8 +32,6 @@ export class Game extends Engine {
             y: 360,
             anchor: new Vector(0.5, 0.5)
         });
-
-
 
 
         console.log(this.difficulty)
@@ -62,176 +64,194 @@ export class Game extends Engine {
 
     startGame() {
 
-        if (Resources.Bgm1){
+        if (Resources.Bgm1) {
             Resources.Bgm1.stop()
         }
-        if (Resources.Bgm2){
+        if (Resources.Bgm2) {
             Resources.Bgm2.stop()
         }
-        if (Resources.Bgm3){
+        if (Resources.Bgm3) {
             Resources.Bgm3.stop()
         }
 
-        console.log("Starting game...");
-        this.elapsedTime = 0; // Keeps track of elapsed seconds
-        this.exampleTimer = 0;
-        this.exampleTimerGoal = 2;
 
-        this.snail = new Actor();
-
-        this.difficultyCheck()
-
-        this.snail.pos = new Vector(0, 300);
-        this.snail.scale = new Vector(0.5, 0.5);
-        this.add(this.snail);
-
-        const shuffleArray = (array) => {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        };
-
-        const retrieveAndShuffleValues = () => {
-            const characters = JSON.parse(localStorage.getItem('characters')) || [];
-            const values = characters.map(character => character.value);
-            return shuffleArray(values);
-        };
-
-        const shuffledValues = retrieveAndShuffleValues();
-        console.log(shuffledValues);
-        this.lettersQueue = shuffledValues;
-
-        this.timerLabel = new Label({
-            text: `Time: ${this.elapsedTime}s`,
-            pos: new Vector(50, 20), // Position on screen
-            font: new Font({
-                size: 46,
-                family: "Roboto Mono, monospace",
-                color: Color.Black,
-            }),
-            textAlign: TextAlign.Left,
-        });
-        this.add(this.timerLabel);
+        // this.countdown()
 
 
-        this.currentLetter = new Label({
-            text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(610, 520),
-            font: new Font({
-                size: 130,
-                family: "Roboto Mono, monospace",
-                color: Color.Yellow
-            }),
-            textAlign: TextAlign.Center,
-            bold: true,
-            shadow: {
-                blur: 2,
-                offset: new Vector(2, 2),
-                color: Color.Black,
-            }
-        });
-        this.add(this.currentLetter);
 
-        const success = Resources.Success;
 
-        // this.timerLabel = new Label({
-        //     text: 'Time: 3',
-        //     pos: new Vector(510, 510),
-        //     font: new Font({
-        //         size: 26,
-        //         family: "Roboto Mono, monospace",
-        //         color: Color.White
-        //     }),
-        //     textAlign: TextAlign.Center
-        //
-        // });
-        // this.add(this.timerLabel);
 
-        this.scoreLabel = new Label({
-            text: '',
-            pos: new Vector(50, 60),
-            font: new Font({
-                size: 32,
-                family: "Roboto Mono, monospace",
-                color: Color.White
-            }),
-            textAlign: TextAlign.Left
-        });
-        this.add(this.scoreLabel);
 
-        this.difficultyLabel = new Label({
-            text: `${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
-            pos: new Vector(50, 70),
-            anchor: new Vector(0.5, 0.5), // Align the label's center to the pos
-            font: new Font({
-                size: 32,
-                family: "Roboto Mono, monospace",
-                color: Color.Black,
-            }),
-            textAlign: TextAlign.Center
 
-        });
-        this.add(this.difficultyLabel);
 
-        this.explanationLabel = new Label({
-            text: '',
-            pos: new Vector(480, 580),
-            font: new Font({size: 32, family: 'Arial', color: Color.Red}),
-            textAlign: TextAlign.Center
-        });
-        this.add(this.explanationLabel);
+        setTimeout(() => {
 
-        this.keyDownHandler = (evt) => {
-            if (evt.key === 'Enter') {
-                if (this.lettersQueue.length > 1) {
-                    this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
-                    this.currentLetter.text = this.lettersQueue[0].toUpperCase();
-                    this.snail.pos.x += 46 * 25;
-                    console.log("Skipped to the last letter.");
+
+            console.log("Starting game...");
+            this.elapsedTime = 0; // Keeps track of elapsed seconds
+            this.exampleTimer = 0;
+            this.exampleTimerGoal = 2;
+
+            this.snail = new Actor();
+
+            this.difficultyCheck()
+
+            this.snail.pos = new Vector(0, 300);
+            this.snail.scale = new Vector(0.5, 0.5);
+            this.add(this.snail);
+
+            const shuffleArray = (array) => {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
                 }
-            }
-        };
+                return array;
+            };
+
+            const retrieveAndShuffleValues = () => {
+                const characters = JSON.parse(localStorage.getItem('characters')) || [];
+                const values = characters.map(character => character.value);
+                return shuffleArray(values);
+            };
+
+            const shuffledValues = retrieveAndShuffleValues();
+            console.log(shuffledValues);
+            this.lettersQueue = shuffledValues;
 
 
-        //development bypass for handdetection with spacebar, remove when live
-        window.addEventListener("keydown", (evt) => {
-            if (evt.key === "k") {
-                success.play(0.5);
+            this.timerLabel = new Label({
+                text: `Time: ${this.elapsedTime}s`,
+                pos: new Vector(50, 20), // Position on screen
+                font: new Font({
+                    size: 46,
+                    family: "Roboto Mono, monospace",
+                    color: Color.Black,
+                }),
+                textAlign: TextAlign.Left,
+            });
+            this.add(this.timerLabel);
 
 
-                this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
-                this.lettersQueue.shift();
-                this.currentLetter.font.color = Color.Blue;
+            this.currentLetter = new Label({
+                text: this.lettersQueue[0].toUpperCase(),
+                pos: new Vector(610, 520),
+                font: new Font({
+                    size: 130,
+                    family: "Roboto Mono, monospace",
+                    color: Color.Yellow
+                }),
+                textAlign: TextAlign.Center,
+                bold: true,
+                shadow: {
+                    blur: 2,
+                    offset: new Vector(2, 2),
+                    color: Color.Black,
+                }
+            });
+            this.add(this.currentLetter);
 
-                setTimeout(() => {
-                    this.currentLetter.font.color = Color.Yellow;
-                    this.feedbackLabel.kill();
+            const success = Resources.Success;
 
-                }, 2000);
+            // this.timerLabel = new Label({
+            //     text: 'Time: 3',
+            //     pos: new Vector(510, 510),
+            //     font: new Font({
+            //         size: 26,
+            //         family: "Roboto Mono, monospace",
+            //         color: Color.White
+            //     }),
+            //     textAlign: TextAlign.Center
+            //
+            // });
+            // this.add(this.timerLabel);
 
-                this.feedbackLabel = new Label({
-                    text: 'Succes!',
-                    pos: new Vector(680, 520),
-                    font: new Font({
-                        family: "Roboto Mono, monospace",
-                        size: 30,
-                        color: Color.White
-                    })
-                });
-                this.add(this.feedbackLabel)
+            this.scoreLabel = new Label({
+                text: '',
+                pos: new Vector(50, 60),
+                font: new Font({
+                    size: 32,
+                    family: "Roboto Mono, monospace",
+                    color: Color.White
+                }),
+                textAlign: TextAlign.Left
+            });
+            this.add(this.scoreLabel);
 
-                // Move upward by 50 pixels over 2000ms
-                this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
-                // Fade out from full opacity to 0 over 2000ms
-                this.feedbackLabel.actions.fade(0, 1000)
+            this.difficultyLabel = new Label({
+                text: `${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
+                pos: new Vector(50, 70),
+                anchor: new Vector(0.5, 0.5), // Align the label's center to the pos
+                font: new Font({
+                    size: 32,
+                    family: "Roboto Mono, monospace",
+                    color: Color.Black,
+                }),
+                textAlign: TextAlign.Center
 
-                // Once the animation is complete, remove the label from the scene
-            }
-        });
+            });
+            this.add(this.difficultyLabel);
 
-        window.addEventListener('keydown', this.keyDownHandler);
+            this.explanationLabel = new Label({
+                text: '',
+                pos: new Vector(480, 580),
+                font: new Font({size: 32, family: 'Arial', color: Color.Red}),
+                textAlign: TextAlign.Center
+            });
+            this.add(this.explanationLabel);
+
+            this.keyDownHandler = (evt) => {
+                if (evt.key === 'Enter') {
+                    if (this.lettersQueue.length > 1) {
+                        this.lettersQueue = [this.lettersQueue[this.lettersQueue.length - 1]];
+                        this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+                        this.snail.pos.x += 46 * 25;
+                        console.log("Skipped to the last letter.");
+                    }
+                }
+            };
+
+
+            //development bypass for handdetection with spacebar, remove when live
+            window.addEventListener("keydown", (evt) => {
+                if (evt.key === "k") {
+                    success.play(0.5);
+
+
+                    this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
+                    this.lettersQueue.shift();
+                    this.currentLetter.font.color = Color.Blue;
+
+                    setTimeout(() => {
+                        this.currentLetter.font.color = Color.Yellow;
+                        this.feedbackLabel.kill();
+
+                    }, 2000);
+
+                    this.feedbackLabel = new Label({
+                        text: 'Succes!',
+                        pos: new Vector(680, 520),
+                        font: new Font({
+                            family: "Roboto Mono, monospace",
+                            size: 30,
+                            color: Color.White
+                        })
+                    });
+                    this.add(this.feedbackLabel)
+
+                    // Move upward by 50 pixels over 2000ms
+                    this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
+                    // Fade out from full opacity to 0 over 2000ms
+                    this.feedbackLabel.actions.fade(0, 1000)
+
+                    // Once the animation is complete, remove the label from the scene
+                }
+            });
+
+            window.addEventListener('keydown', this.keyDownHandler);
+
+
+        }, 5000);
+
     }
 
 
@@ -261,7 +281,6 @@ export class Game extends Engine {
                     this.feedbackLabel.kill();
 
                 }, 2000);
-
 
 
                 this.feedbackLabel = new Label({
@@ -320,6 +339,8 @@ export class Game extends Engine {
             console.log(this.exampleTimer)
         }
 
+
+
         this.timerLabel.text = `Time: ${this.elapsedTime}s`;
         if (this.exampleTimer === this.exampleTimerGoal) {
             this.showExample()
@@ -362,16 +383,15 @@ export class Game extends Engine {
         this.difficultyLabel.kill();
         this.explanationLabel.kill();
 
-        if (Resources.Bgm1){
-        Resources.Bgm1.stop()
+        if (Resources.Bgm1) {
+            Resources.Bgm1.stop()
         }
-        if (Resources.Bgm2){
+        if (Resources.Bgm2) {
             Resources.Bgm2.stop()
         }
-        if (Resources.Bgm3){
+        if (Resources.Bgm3) {
             Resources.Bgm3.stop()
         }
-
 
 
         const endLabel = new Label({
