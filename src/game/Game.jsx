@@ -78,7 +78,8 @@ function GameComponent() {
             })
             const data = await response.json()
             console.log(data)
-            localStorage.removeItem('playTime')
+            localStorage.removeItem('playTime');
+            console.log(localStorage.getItem('playTime'))
         } catch (error) {
             console.error("Error in fetching token", error)
         }
