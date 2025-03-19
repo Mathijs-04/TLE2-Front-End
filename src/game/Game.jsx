@@ -56,14 +56,18 @@ function GameComponent() {
         } else if (difficulty === "gevorderd") {
              level = 3;
         }
-        const playTime = parseInt(localStorage.getItem('playTime'));
+        console.log(level)
         try {
+            const playTime = parseInt(localStorage.getItem('playTime'));
+
             const response = await fetch(`http://145.24.222.137:8000/api/v2/scores`, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3'
+                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+
                 },
                 body: JSON.stringify({
                     level: level,
