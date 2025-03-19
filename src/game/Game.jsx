@@ -76,7 +76,16 @@ function GameComponent() {
 
                 })
             })
-            const data = await response.json()
+            const getStats = await fetch(`http://145.24.222.137:8000/api/v2/scores`, {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-access-key': 'c19939b20ba08edeceb70785f5a473217c1706b456ce7ecd3cb38ec36785cfe3',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            })
+            const data = await getStats.json()
             console.log(data)
             localStorage.removeItem('playTime');
             console.log(localStorage.getItem('playTime'))
@@ -208,7 +217,7 @@ function GameComponent() {
                 {gameEnded && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                         bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
-                        <h3 className="text-3xl font-bold text-Navy mb-4">Game Over!</h3>
+                        <h3 className="text-3xl font-bold text-Navy mb-4">Finish!</h3>
                         <button
                             onClick={restartGame}
                             className="bg-DuskBlue w-full max-w-[250px] text-white text-lg font-nunito font-bold px-4 py-2 rounded-lg shadow-lg hover:bg-[#4F6490] transition focus:ring-2 focus:ring-blue-400">
