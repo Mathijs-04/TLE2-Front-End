@@ -38,7 +38,7 @@ export class Game extends Engine {
             this.add(background);
             this.snail.graphics.use(Resources.Snail.toSprite());
             const bgm1 = Resources.Bgm1;
-            bgm1.play(0.5);
+            bgm1.play(0.2);
 
         } else if (this.difficulty === 'gemiddeld') {
             background.graphics.use(Resources.BgNormal.toSprite());
@@ -46,7 +46,7 @@ export class Game extends Engine {
             this.snail.graphics.use(Resources.Snail1.toSprite());
             this.exampleTimerGoal = 8;
             const bgm2 = Resources.Bgm2;
-            bgm2.play(0.5);
+            bgm2.play(0.2);
 
 
         } else if (this.difficulty === 'gevorderd') {
@@ -55,7 +55,7 @@ export class Game extends Engine {
             this.snail.graphics.use(Resources.Snail2.toSprite());
             this.exampleTimerGoal = 999;
             const bgm3 = Resources.Bgm3;
-            bgm3.play(0.5);
+            bgm3.play(0.2);
 
         }
     }
