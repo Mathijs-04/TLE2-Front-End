@@ -230,10 +230,11 @@ export class Game extends Engine {
 
 
     endGame(snail) {
-        let finalTime = this.timerInterval;
+
+        clearInterval(this.timerInterval); // Stops the timer
+        let finalTime = this.elapsedTime;
         console.log(finalTime*1000)
         localStorage.setItem("playTime", finalTime*1000);
-        clearInterval(this.timerInterval); // Stops the timer
         finalTime = null;
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
