@@ -208,15 +208,20 @@ export class Game extends Engine {
 
         this.fish.graphics.use(Resources.Fish.toSprite());
 
-        this.fish.pos = new Vector(0, 300);
-        this.fish.scale = new Vector(0.5, 0.5);
+
+
+        this.fish.pos = new Vector(610, 540);
+        this.fish.scale = new Vector(1, 1);
+        this.fish.graphics.flipHorizontal = true;
+
+
         this.add(this.fish);
 
     }
 
     timerInterval = setInterval(() => {
         this.elapsedTime++;
-        if (this.exampleTimer<=5 ) {
+        if (this.exampleTimer <= 5) {
             this.exampleTimer++;
             console.log(this.exampleTimer)
         }
@@ -226,12 +231,6 @@ export class Game extends Engine {
             this.showExample()
         }
     }, 1000);
-
-
-
-
-
-
 
 
     // startNewTimer() {
