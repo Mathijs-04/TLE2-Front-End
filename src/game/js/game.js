@@ -19,6 +19,9 @@ export class Game extends Engine {
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
+
+
+
     difficultyCheck() {
         const background = new Actor({
             x: 640,
@@ -26,17 +29,23 @@ export class Game extends Engine {
             anchor: new Vector(0.5, 0.5)
         });
 
+        const bgm1 = Resources.Bgm1;
+
+
+
         console.log(this.difficulty)
         if (this.difficulty === 'beginner') {
             background.graphics.use(Resources.BgEasy.toSprite());
             this.add(background);
             this.snail.graphics.use(Resources.Snail.toSprite());
+            bgm1.play(0.5);
 
         } else if (this.difficulty === 'gemiddeld') {
             background.graphics.use(Resources.BgNormal.toSprite());
             this.add(background);
             this.snail.graphics.use(Resources.Snail1.toSprite());
             this.exampleTimerGoal = 8;
+            bgm1.play(0.5);
 
 
         } else if (this.difficulty === 'gevorderd') {
@@ -44,12 +53,16 @@ export class Game extends Engine {
             this.add(background);
             this.snail.graphics.use(Resources.Snail2.toSprite());
             this.exampleTimerGoal = 999;
+            bgm1.play(0.5);
 
         }
     }
 
     startGame() {
 
+        if (Resources.Bgm1){
+            Resources.Bgm1.stop()
+        }
 
         console.log("Starting game...");
         this.elapsedTime = 0; // Keeps track of elapsed seconds
@@ -113,6 +126,8 @@ export class Game extends Engine {
         });
         this.add(this.currentLetter);
 
+        const success = Resources.Success;
+
         // this.timerLabel = new Label({
         //     text: 'Time: 3',
         //     pos: new Vector(510, 510),
@@ -175,6 +190,9 @@ export class Game extends Engine {
         //development bypass for handdetection with spacebar, remove when live
         window.addEventListener("keydown", (evt) => {
             if (evt.key === "k") {
+                success.play(0.5);
+
+
                 this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
                 this.lettersQueue.shift();
                 this.currentLetter.font.color = Color.Blue;
@@ -212,11 +230,13 @@ export class Game extends Engine {
     handleGestureDetection(result) {
         if (!result || result.length === 0 || this.lettersQueue.length === 0) return;
 
+        const success = Resources.Success;
         const targetChar = this.lettersQueue[0].toLowerCase();
         const detectedLetters = result.map(([letter]) => letter.toLowerCase());
         console.log(`Detected letters: ${detectedLetters}`);
         if (detectedLetters.includes(targetChar)) {
             this.snail.actions.moveBy(new Vector(46, 0), 200);
+            success.play(0.5);
             this.lettersQueue.shift();
 
 
@@ -226,12 +246,15 @@ export class Game extends Engine {
 
                 this.currentLetter.font.color = Color.Green;
 
+
                 setTimeout(() => {
                     this.currentLetter.font.color = Color.Yellow;
-                    this.feedbackLabel.kill();
                     this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+                    this.feedbackLabel.kill();
 
                 }, 2000);
+
+
 
                 this.feedbackLabel = new Label({
                     text: 'Goed gedaan!',
@@ -254,11 +277,7 @@ export class Game extends Engine {
                 }
                 this.exampleTimer = 0;
 
-                // Delay for 1000 milliseconds (1 second)
-                setTimeout(() => {
-                    // Place additional code here that should run after the delay.
-                    // For example, you might reset the color or update the letter.
-                }, 1000);
+
             }
 
             this.explanationLabel.text = '';
@@ -335,6 +354,12 @@ export class Game extends Engine {
         this.difficultyLabel.kill();
         this.explanationLabel.kill();
 
+        if (Resources.Bgm1){
+        Resources.Bgm1.pause()
+        }
+
+
+
         const endLabel = new Label({
             text: 'Game Ended',
             pos: new Vector(460, 300),
@@ -347,4 +372,5 @@ export class Game extends Engine {
             if (this.onGameEnd) this.onGameEnd();
         }, 1);
     }
+
 }

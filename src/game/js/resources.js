@@ -36,7 +36,12 @@ const Resources = {
 
     BgEasy: new ImageSource('images/easy-bg.png'),
     BgNormal: new ImageSource('images/normal-bg.png'),
-    BgHard: new ImageSource('images/hard-bg.png')
+    BgHard: new ImageSource('images/hard-bg.png'),
+
+
+    //sounds
+    Success: new Sound('sounds/success1.wav'),
+    Bgm1: new Sound('sounds/bgm1.mp3')
 }
 
 

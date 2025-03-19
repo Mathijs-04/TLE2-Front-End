@@ -2,6 +2,7 @@ import React, {useEffect, useRef} from "react";
 import {FilesetResolver, HandLandmarker} from "@mediapipe/tasks-vision";
 import KNear from "./handtracker/knear.js";
 import JSONData1 from "./models/allmoveset_rechts.json";
+import {Color} from "excalibur";
 
 const HandTrackingComponent = ({onDetect}) => {
     const videoRef = useRef(null);
@@ -183,20 +184,22 @@ const HandTrackingComponent = ({onDetect}) => {
                 if (onDetect) onDetect(result);
             }
 
-            setTimeout(() => {
-                animationFrameRef.current = requestAnimationFrame(processFrame);
-            }, 2000);
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    animationFrameRef.current = requestAnimationFrame(resolve);
+                }, 200);
+            });
+            return processFrame();
 
         }
 
-        function startRealTimeDetection() {
+        async function startRealTimeDetection() {
             console.log("Starting real-time detection...");
 
-
-            animationFrameRef.current = requestAnimationFrame(processFrame);
-
-            // setTimeout(() => {
-            // }, 2000);
+            await new Promise(resolve => {
+                animationFrameRef.current = requestAnimationFrame(resolve);
+            });
+            return processFrame();
         }
 
         initializeHandTracking();
