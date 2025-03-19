@@ -53,7 +53,7 @@ export class Game extends Engine {
 
         console.log("Starting game...");
         this.elapsedTime = 0; // Keeps track of elapsed seconds
-        this.exampleTimer = 0; // Keeps track of elapsed seconds
+        this.exampleTimer = 0;
         this.exampleTimerGoal = 2;
 
         this.snail = new Actor();
@@ -112,7 +112,6 @@ export class Game extends Engine {
             }
         });
         this.add(this.currentLetter);
-
 
         // this.timerLabel = new Label({
         //     text: 'Time: 3',
@@ -202,11 +201,7 @@ export class Game extends Engine {
                 // Fade out from full opacity to 0 over 2000ms
                 this.feedbackLabel.actions.fade(0, 1000)
 
-
                 // Once the animation is complete, remove the label from the scene
-
-
-
             }
         });
 
@@ -228,9 +223,6 @@ export class Game extends Engine {
             if (this.lettersQueue.length === 0) {
                 this.endGame(this.snail);
             } else {
-
-
-
 
                 this.currentLetter.font.color = Color.Green;
 
@@ -257,17 +249,10 @@ export class Game extends Engine {
                 // Fade out from full opacity to 0 over 2000ms
                 this.feedbackLabel.actions.fade(0, 1000)
 
-
-
-
-
-
                 if (this.exampleLetter) {
                     this.exampleLetter.kill();
                 }
                 this.exampleTimer = 0;
-
-
 
                 // Delay for 1000 milliseconds (1 second)
                 setTimeout(() => {
@@ -278,13 +263,9 @@ export class Game extends Engine {
 
             this.explanationLabel.text = '';
         } else {
-
-
             // this.explanationLabel.text = `Wrong letter! Expected ${this.lettersQueue[0].toUpperCase()}`;
         }
     }
-
-
 
     showExample() {
         console.log('example showing')
@@ -295,9 +276,6 @@ export class Game extends Engine {
 
         let resourceKey = `letter${targetLetter.toUpperCase()}`; // e.g., "letterB"
         this.exampleLetter.graphics.use(Resources[resourceKey].toSprite());
-
-
-
 
         this.exampleLetter.pos = new Vector(210, 590);
         this.exampleLetter.scale = new Vector(1, 1);
@@ -321,7 +299,6 @@ export class Game extends Engine {
         }
     }, 1000);
 
-
     // startNewTimer() {
     //     if (this.timerId) clearInterval(this.timerId);
     //
@@ -344,13 +321,12 @@ export class Game extends Engine {
     //     }, 1000);
     // }
 
-
     endGame(snail) {
 
         clearInterval(this.timerInterval); // Stops the timer
         let finalTime = this.elapsedTime;
-        console.log(finalTime*1000)
-        localStorage.setItem("playTime", finalTime*1000);
+        console.log(finalTime * 1000)
+        localStorage.setItem("playTime", finalTime * 1000);
         finalTime = null;
         window.removeEventListener('keydown', this.keyDownHandler);
         snail.kill();
@@ -358,7 +334,6 @@ export class Game extends Engine {
         this.scoreLabel.kill();
         this.difficultyLabel.kill();
         this.explanationLabel.kill();
-
 
         const endLabel = new Label({
             text: 'Game Ended',
@@ -372,5 +347,4 @@ export class Game extends Engine {
             if (this.onGameEnd) this.onGameEnd();
         }, 1);
     }
-
 }
