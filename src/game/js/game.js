@@ -36,11 +36,14 @@ export class Game extends Engine {
             background.graphics.use(Resources.BgNormal.toSprite());
             this.add(background);
             this.snail.graphics.use(Resources.Snail1.toSprite());
+            this.exampleTimerGoal = 8;
+
 
         } else if (this.difficulty === 'gevorderd') {
             background.graphics.use(Resources.BgHard.toSprite());
             this.add(background);
             this.snail.graphics.use(Resources.Snail2.toSprite());
+            this.exampleTimerGoal = 999;
 
         }
     }
@@ -51,7 +54,7 @@ export class Game extends Engine {
         console.log("Starting game...");
         this.elapsedTime = 0; // Keeps track of elapsed seconds
         this.exampleTimer = 0; // Keeps track of elapsed seconds
-
+        this.exampleTimerGoal = 2;
 
         this.snail = new Actor();
 
@@ -83,7 +86,7 @@ export class Game extends Engine {
             text: `Time: ${this.elapsedTime}s`,
             pos: new Vector(50, 20), // Position on screen
             font: new Font({
-                size: 32,
+                size: 46,
                 family: "Roboto Mono, monospace",
                 color: Color.Black,
             }),
@@ -94,9 +97,9 @@ export class Game extends Engine {
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(610, 540),
+            pos: new Vector(610, 520),
             font: new Font({
-                size: 100,
+                size: 130,
                 family: "Roboto Mono, monospace",
                 color: Color.Yellow
             }),
@@ -138,7 +141,7 @@ export class Game extends Engine {
 
         this.difficultyLabel = new Label({
             text: `${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
-            pos: new Vector(50, 50),
+            pos: new Vector(50, 70),
             anchor: new Vector(0.5, 0.5), // Align the label's center to the pos
             font: new Font({
                 size: 32,
@@ -184,12 +187,12 @@ export class Game extends Engine {
                 }, 2000);
 
                 this.feedbackLabel = new Label({
-                    text: 'Goed gedaan!',
+                    text: 'Succes!',
                     pos: new Vector(680, 520),
                     font: new Font({
                         family: "Roboto Mono, monospace",
                         size: 30,
-                        color: Color.Green
+                        color: Color.White
                     })
                 });
                 this.add(this.feedbackLabel)
@@ -221,13 +224,49 @@ export class Game extends Engine {
             this.snail.actions.moveBy(new Vector(46, 0), 200);
             this.lettersQueue.shift();
 
+
             if (this.lettersQueue.length === 0) {
                 this.endGame(this.snail);
             } else {
-                this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+
+
+
+
                 this.currentLetter.font.color = Color.Green;
-                this.exampleLetter.kill();
+
+                setTimeout(() => {
+                    this.currentLetter.font.color = Color.Yellow;
+                    this.feedbackLabel.kill();
+                    this.currentLetter.text = this.lettersQueue[0].toUpperCase();
+
+                }, 2000);
+
+                this.feedbackLabel = new Label({
+                    text: 'Goed gedaan!',
+                    pos: new Vector(680, 520),
+                    font: new Font({
+                        family: "Roboto Mono, monospace",
+                        size: 30,
+                        color: Color.Green
+                    })
+                });
+                this.add(this.feedbackLabel)
+
+                // Move upward by 50 pixels over 2000ms
+                this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
+                // Fade out from full opacity to 0 over 2000ms
+                this.feedbackLabel.actions.fade(0, 1000)
+
+
+
+
+
+
+                if (this.exampleLetter) {
+                    this.exampleLetter.kill();
+                }
                 this.exampleTimer = 0;
+
 
 
                 // Delay for 1000 milliseconds (1 second)
@@ -271,13 +310,13 @@ export class Game extends Engine {
 
     timerInterval = setInterval(() => {
         this.elapsedTime++;
-        if (this.exampleTimer <= 5) {
+        if (this.exampleTimer <= 8) {
             this.exampleTimer++;
             console.log(this.exampleTimer)
         }
 
         this.timerLabel.text = `Time: ${this.elapsedTime}s`;
-        if (this.exampleTimer === 1) {
+        if (this.exampleTimer === this.exampleTimerGoal) {
             this.showExample()
         }
     }, 1000);

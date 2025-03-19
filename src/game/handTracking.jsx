@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { FilesetResolver, HandLandmarker } from "@mediapipe/tasks-vision";
+import React, {useEffect, useRef} from "react";
+import {FilesetResolver, HandLandmarker} from "@mediapipe/tasks-vision";
 import KNear from "./handtracker/knear.js";
 import JSONData1 from "./models/allmoveset_rechts.json";
-import {Color} from "excalibur";
 
-const HandTrackingComponent = ({ onDetect }) => {
+const HandTrackingComponent = ({onDetect}) => {
     const videoRef = useRef(null);
     const handLandmarkerRef = useRef(null);
     const machine = new KNear(1);
@@ -32,24 +31,24 @@ const HandTrackingComponent = ({ onDetect }) => {
         }
 
         function startWebcam() {
-                console.log("Starting webcam...");
-                navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
-                        videoRef.current.play();
-                        videoRef.current.onloadeddata = () => {
-                            console.log("Webcam started. Loading model...");
-                            setTimeout(() => {
-                                importJSON().then(visualizeHands);
+            console.log("Starting webcam...");
+            navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.play();
+                    videoRef.current.onloadeddata = () => {
+                        console.log("Webcam started. Loading model...");
+                        setTimeout(() => {
+                            importJSON().then(visualizeHands);
 
 
-                            }, 5000);
-                            startRealTimeDetection();
-                        };
-                    }
-                }).catch((error) => {
-                    console.error("Error accessing webcam:", error);
-                });
+                        }, 5000);
+                        startRealTimeDetection();
+                    };
+                }
+            }).catch((error) => {
+                console.error("Error accessing webcam:", error);
+            });
 
         }
 
@@ -116,7 +115,8 @@ const HandTrackingComponent = ({ onDetect }) => {
                 let zEnd = Math.round(landmarks[end].z * 10) / 10;
                 let alpha = (depthAlpha[zStart] + depthAlpha[zEnd]) / 2; // Average of the two depths
 
-                ctx.strokeStyle = `rgba(0, 255, 0, ${alpha})`; // Green lines with transparency
+                ctx.strokeStyle = `rgba(245, 245, 220, ${alpha})`; // Beige lines with transparency
+                ctx.lineWidth = 15;
                 ctx.beginPath();
                 ctx.moveTo(landmarks[start].x * canvas.width, landmarks[start].y * canvas.height);
                 ctx.lineTo(landmarks[end].x * canvas.width, landmarks[end].y * canvas.height);
@@ -127,7 +127,8 @@ const HandTrackingComponent = ({ onDetect }) => {
                 let zGroup = Math.round(point.z * 10) / 10;
                 let alpha = depthAlpha[zGroup];
 
-                ctx.fillStyle = `rgba(255, 0, 0, ${alpha})`; // Red circles with transparency
+                ctx.fillStyle = `rgba(128, 128, 128, ${alpha})`; // Gray circles with transparency
+                ctx.lineWidth = 10
                 ctx.beginPath();
                 ctx.arc(point.x * canvas.width, point.y * canvas.height, 5, 0, Math.PI * 2);
                 ctx.fill();
@@ -184,18 +185,18 @@ const HandTrackingComponent = ({ onDetect }) => {
 
             setTimeout(() => {
                 animationFrameRef.current = requestAnimationFrame(processFrame);
+            }, 2000);
 
-
-            }, 5000);
         }
 
         function startRealTimeDetection() {
             console.log("Starting real-time detection...");
-            setTimeout(() => {
-                animationFrameRef.current = requestAnimationFrame(processFrame);
 
 
-            }, 2000);
+            animationFrameRef.current = requestAnimationFrame(processFrame);
+
+            // setTimeout(() => {
+            // }, 2000);
         }
 
         initializeHandTracking();
