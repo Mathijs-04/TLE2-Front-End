@@ -41,7 +41,10 @@ const Resources = {
 
     //sounds
     Success: new Sound('sounds/success1.wav'),
-    Bgm1: new Sound('sounds/bgm1.mp3')
+    Bgm1: new Sound('sounds/bgm1.mp3'),
+    Bgm2: new Sound('sounds/bgm2.mp3'),
+    Bgm3: new Sound('sounds/bgm3.mp3')
+
 }
 
 

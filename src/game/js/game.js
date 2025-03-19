@@ -29,7 +29,6 @@ export class Game extends Engine {
             anchor: new Vector(0.5, 0.5)
         });
 
-        const bgm1 = Resources.Bgm1;
 
 
 
@@ -38,6 +37,7 @@ export class Game extends Engine {
             background.graphics.use(Resources.BgEasy.toSprite());
             this.add(background);
             this.snail.graphics.use(Resources.Snail.toSprite());
+            const bgm1 = Resources.Bgm1;
             bgm1.play(0.5);
 
         } else if (this.difficulty === 'gemiddeld') {
@@ -45,7 +45,8 @@ export class Game extends Engine {
             this.add(background);
             this.snail.graphics.use(Resources.Snail1.toSprite());
             this.exampleTimerGoal = 8;
-            bgm1.play(0.5);
+            const bgm2 = Resources.Bgm2;
+            bgm2.play(0.5);
 
 
         } else if (this.difficulty === 'gevorderd') {
@@ -53,7 +54,8 @@ export class Game extends Engine {
             this.add(background);
             this.snail.graphics.use(Resources.Snail2.toSprite());
             this.exampleTimerGoal = 999;
-            bgm1.play(0.5);
+            const bgm3 = Resources.Bgm3;
+            bgm3.play(0.5);
 
         }
     }
@@ -62,6 +64,12 @@ export class Game extends Engine {
 
         if (Resources.Bgm1){
             Resources.Bgm1.stop()
+        }
+        if (Resources.Bgm2){
+            Resources.Bgm2.stop()
+        }
+        if (Resources.Bgm3){
+            Resources.Bgm3.stop()
         }
 
         console.log("Starting game...");
@@ -356,6 +364,12 @@ export class Game extends Engine {
 
         if (Resources.Bgm1){
         Resources.Bgm1.stop()
+        }
+        if (Resources.Bgm2){
+            Resources.Bgm2.stop()
+        }
+        if (Resources.Bgm3){
+            Resources.Bgm3.stop()
         }
 
 

@@ -1,7 +1,7 @@
 import Navigation from "./components/Navigation.jsx";
 import {Link, useLocation, useNavigate} from "react-router";
 import {useEffect} from "react";
-import { useState } from "react";
+import {useState} from "react";
 
 function Home() {
     const navigate = useNavigate();
@@ -52,11 +52,11 @@ function Home() {
 
     return (
         <>
-            <Navigation />
+            <Navigation/>
 
             <main className="flex flex-col items-center font-nunito justify-start min-h-screen bg-cream relative pt-20">
                 <h1 className="text-Navy font-extrabold text-4xl sm:text-5xl lg:text-6xl sm:mt-0 lg:mt-28 mb-14">
-                    Gebaren Game
+                    Sign Trail
                 </h1>
 
                 <div className="flex items-center gap-8">
@@ -65,7 +65,7 @@ function Home() {
                         aria-label="Toon informatie"
                         className="p-2 rounded-full transition"
                     >
-                        <img className="h-auto max-h-14 w-auto" src="/images/info.png" alt="Info knop" />
+                        <img className="h-auto max-h-14 w-auto" src="/images/info.png" alt="Info knop"/>
                     </button>
 
                     <Link to={"/game"}>
@@ -83,14 +83,17 @@ function Home() {
                         aria-modal="true"
                         aria-labelledby="popup-title"
                     >
-                        <div className="bg-white text-Navy p-8 rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto text-center">
-                            <h2 id="popup-title" className="text-5xl border-b-4 border-Yellow w-56 font-black font-nunito mb-10">INFORMATIE</h2>
+                        <div
+                            className="bg-white text-Navy p-8 rounded-xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto text-center">
+                            <h2 id="popup-title"
+                                className="text-5xl border-b-4 border-Yellow w-56 font-black font-nunito mb-10">INFORMATIE</h2>
                             <p className="text-2xl mb-5">
                                 In dit spel kan jij door middel van jouw camera oefenen met vingerspellen.
                                 Help de slak naar de finish door de juiste handvormen aan te nemen!
                             </p>
                             <p className="text-2xl mb-5">
-                                Weet je het even niet meer? Spiek dan nog even in het Alfabet. Die kan je linksboven vinden met dit icoontje:
+                                Weet je het even niet meer? Spiek dan nog even in het Alfabet. Die kan je linksboven
+                                vinden met dit icoontje:
                             </p>
                             <img
                                 src="/images/abc-block.png"
