@@ -97,9 +97,9 @@ export class Game extends Engine {
 
         this.currentLetter = new Label({
             text: this.lettersQueue[0].toUpperCase(),
-            pos: new Vector(610, 540),
+            pos: new Vector(610, 520),
             font: new Font({
-                size: 100,
+                size: 130,
                 family: "Roboto Mono, monospace",
                 color: Color.Yellow
             }),
