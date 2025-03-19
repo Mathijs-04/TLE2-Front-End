@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { FilesetResolver, HandLandmarker } from "@mediapipe/tasks-vision";
 import KNear from "./handtracker/knear.js";
 import JSONData1 from "./models/allmoveset_rechts.json";
+import {Color} from "excalibur";
 
 const HandTrackingComponent = ({ onDetect }) => {
     const videoRef = useRef(null);
@@ -31,23 +32,29 @@ const HandTrackingComponent = ({ onDetect }) => {
         }
 
         function startWebcam() {
-            console.log("Starting webcam...");
-            navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream;
-                    videoRef.current.play();
-                    videoRef.current.onloadeddata = () => {
-                        console.log("Webcam started. Loading model...");
-                        importJSON().then(visualizeHands);
-                        startRealTimeDetection();
-                    };
-                }
-            }).catch((error) => {
-                console.error("Error accessing webcam:", error);
-            });
+                console.log("Starting webcam...");
+                navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+                    if (videoRef.current) {
+                        videoRef.current.srcObject = stream;
+                        videoRef.current.play();
+                        videoRef.current.onloadeddata = () => {
+                            console.log("Webcam started. Loading model...");
+                            setTimeout(() => {
+                                importJSON().then(visualizeHands);
+
+
+                            }, 5000);
+                            startRealTimeDetection();
+                        };
+                    }
+                }).catch((error) => {
+                    console.error("Error accessing webcam:", error);
+                });
+
         }
 
         async function visualizeHands() {
+
             // DEBUG Functie kan uit kost volgens mij veel performance
             if (!handLandmarkerRef.current || !videoRef.current || !canvasRef.current) return;
 
@@ -151,6 +158,11 @@ const HandTrackingComponent = ({ onDetect }) => {
             if (!handLandmarkerRef.current || !videoRef.current) return;
 
             const results = await handLandmarkerRef.current.detectForVideo(videoRef.current, performance.now());
+            // Optionally, add a check to ensure that the detection result is valid.
+            if (!results || !results.landmarks || results.landmarks.length === 0) {
+                animationFrameRef.current = requestAnimationFrame(processFrame);
+                return;
+            }
             let detectArray = [];
 
             for (let hand of results.landmarks) {
@@ -170,12 +182,20 @@ const HandTrackingComponent = ({ onDetect }) => {
                 if (onDetect) onDetect(result);
             }
 
-            animationFrameRef.current = requestAnimationFrame(processFrame);
+            setTimeout(() => {
+                animationFrameRef.current = requestAnimationFrame(processFrame);
+
+
+            }, 5000);
         }
 
         function startRealTimeDetection() {
             console.log("Starting real-time detection...");
-            animationFrameRef.current = requestAnimationFrame(processFrame);
+            setTimeout(() => {
+                animationFrameRef.current = requestAnimationFrame(processFrame);
+
+
+            }, 2000);
         }
 
         initializeHandTracking();
