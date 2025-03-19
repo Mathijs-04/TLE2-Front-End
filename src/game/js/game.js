@@ -355,7 +355,7 @@ export class Game extends Engine {
         this.explanationLabel.kill();
 
         if (Resources.Bgm1){
-        Resources.Bgm1.pause()
+        Resources.Bgm1.stop()
         }
 
 
