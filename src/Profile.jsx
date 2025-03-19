@@ -165,7 +165,6 @@ function Profile() {
                                     ))
                                     : Array.from({ length: 3 }).map((_, i) => (
                                         <li key={i} className="flex font-medium justify-between border-b pb-1">
-                                            <span className="italic text-sm">Game {i + 1}</span>
                                             <span className="text-sm">--:--</span>
                                         </li>
                                     ))}
