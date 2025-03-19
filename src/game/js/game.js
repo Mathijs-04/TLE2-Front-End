@@ -86,7 +86,7 @@ export class Game extends Engine {
             text: `Time: ${this.elapsedTime}s`,
             pos: new Vector(50, 20), // Position on screen
             font: new Font({
-                size: 32,
+                size: 46,
                 family: "Roboto Mono, monospace",
                 color: Color.Black,
             }),
@@ -141,7 +141,7 @@ export class Game extends Engine {
 
         this.difficultyLabel = new Label({
             text: `${this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)}`,
-            pos: new Vector(50, 50),
+            pos: new Vector(50, 70),
             anchor: new Vector(0.5, 0.5), // Align the label's center to the pos
             font: new Font({
                 size: 32,
@@ -187,12 +187,12 @@ export class Game extends Engine {
                 }, 2000);
 
                 this.feedbackLabel = new Label({
-                    text: 'Goed gedaan!',
+                    text: 'Succes!',
                     pos: new Vector(680, 520),
                     font: new Font({
                         family: "Roboto Mono, monospace",
                         size: 30,
-                        color: Color.Green
+                        color: Color.White
                     })
                 });
                 this.add(this.feedbackLabel)
