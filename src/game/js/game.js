@@ -15,6 +15,7 @@ export class Game extends Engine {
 
         this.difficulty = difficulty;
         this.onGameEnd = onGameEnd;
+
         this.start(ResourceLoader).then(() => this.startGame());
     }
 
@@ -225,6 +226,9 @@ export class Game extends Engine {
             } else {
                 this.currentLetter.text = this.lettersQueue[0].toUpperCase();
                 this.currentLetter.font.color = Color.Green;
+                this.exampleLetter.kill();
+                this.exampleTimer = 0;
+
 
                 // Delay for 1000 milliseconds (1 second)
                 setTimeout(() => {
@@ -241,20 +245,27 @@ export class Game extends Engine {
         }
     }
 
+
+
     showExample() {
         console.log('example showing')
-        this.fish = new Actor();
+        this.exampleLetter = new Actor();
 
-        this.fish.graphics.use(Resources.Fish.toSprite());
+        let targetLetter = this.lettersQueue[0];
+        console.log(targetLetter);
 
-
-
-        this.fish.pos = new Vector(610, 540);
-        this.fish.scale = new Vector(1, 1);
-        this.fish.graphics.flipHorizontal = true;
+        let resourceKey = `letter${targetLetter.toUpperCase()}`; // e.g., "letterB"
+        this.exampleLetter.graphics.use(Resources[resourceKey].toSprite());
 
 
-        this.add(this.fish);
+
+
+        this.exampleLetter.pos = new Vector(210, 590);
+        this.exampleLetter.scale = new Vector(1, 1);
+        this.exampleLetter.graphics.flipHorizontal = true;
+        this.exampleLetter.graphics.color = Color.White;
+
+        this.add(this.exampleLetter);
 
     }
 
@@ -266,7 +277,7 @@ export class Game extends Engine {
         }
 
         this.timerLabel.text = `Time: ${this.elapsedTime}s`;
-        if (this.exampleTimer === 5) {
+        if (this.exampleTimer === 1) {
             this.showExample()
         }
     }, 1000);
