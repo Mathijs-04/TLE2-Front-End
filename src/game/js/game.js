@@ -54,7 +54,7 @@ export class Game extends Engine {
         console.log("Starting game...");
         this.elapsedTime = 0; // Keeps track of elapsed seconds
         this.exampleTimer = 0; // Keeps track of elapsed seconds
-        this.exampleTimerGoal = 1;
+        this.exampleTimerGoal = 2;
 
         this.snail = new Actor();
 
