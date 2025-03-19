@@ -230,7 +230,7 @@ export class Game extends Engine {
 
 
     endGame(snail) {
-        const finalTime = Math.floor((Date.now() - this.startTime) / 1000);
+        const finalTime = this.timerInterval;
         console.log(finalTime)
         localStorage.setItem("playTime", finalTime);
         clearInterval(this.timerInterval); // Stops the timer
