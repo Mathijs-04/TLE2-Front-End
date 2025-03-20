@@ -101,13 +101,13 @@ function GameComponent() {
         fetchGameData();
 
         setGameEnded(false);
-        setPlayTime(null);
         if (gameRef.current) gameRef.current.stop();
         gameRef.current = new Game(canvasRef.current, difficulty, () => {
             const endTime = Date.now();
             const timeTaken = ((endTime - gameRef.current.startTime) / 1000).toFixed(2);
             setPlayTime(timeTaken);
             setGameEnded(true);
+
         });
         gameRef.current.start();
         gameRef.current.startTime = Date.now(); // Store game start time
@@ -242,7 +242,7 @@ function GameComponent() {
                                     bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
                         <h3 className="text-3xl font-bold text-Navy mb-4">Finish!</h3>
                         {playTime &&
-                            <p className="text-lg font-semibold text-gray-700 mb-4">Jouw tijd: {playTime} seconden</p>}
+                            <p className="text-lg font-semibold text-gray-700 mb-4">Jouw tijd: {playTime - 5.0} seconden</p>}
                         <button
                             onClick={restartGame}
                             className="bg-DuskBlue w-full max-w-[250px] text-white text-lg font-nunito font-bold px-4 py-2 rounded-lg shadow-lg hover:bg-[#4F6490] transition focus:ring-2 focus:ring-blue-400">
