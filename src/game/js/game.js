@@ -78,7 +78,7 @@ export class Game extends Engine {
         // label voor loading screen
         this.loadingLabel = new Label({
             text: 'Laden...',
-            pos: new Vector(600, 60),
+            pos: new Vector(900, 600),
             font: new Font({
                 size: 32,
                 family: "Roboto Mono, monospace",
