@@ -223,40 +223,40 @@ export class Game extends Engine {
 
 
             //development bypass for handdetection with spacebar, remove when live
-            window.addEventListener("keydown", (evt) => {
-                if (evt.key === "k") {
-                    success.play(0.5);
-
-
-                    this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
-                    this.lettersQueue.shift();
-                    this.currentLetter.font.color = Color.Blue;
-
-                    setTimeout(() => {
-                        this.currentLetter.font.color = Color.Yellow;
-                        this.feedbackLabel.kill();
-
-                    }, 2000);
-
-                    this.feedbackLabel = new Label({
-                        text: 'Succes!',
-                        pos: new Vector(680, 520),
-                        font: new Font({
-                            family: "Roboto Mono, monospace",
-                            size: 30,
-                            color: Color.White
-                        })
-                    });
-                    this.add(this.feedbackLabel)
-
-                    // Move upward by 50 pixels over 2000ms
-                    this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
-                    // Fade out from full opacity to 0 over 2000ms
-                    this.feedbackLabel.actions.fade(0, 1000)
-
-                    // Once the animation is complete, remove the label from the scene
-                }
-            });
+            // window.addEventListener("keydown", (evt) => {
+            //     if (evt.key === "k") {
+            //         success.play(0.5);
+            //
+            //
+            //         this.snail.actions.moveBy(new Vector(46, 0), 200); // Moves 46px to the right in 200ms
+            //         this.lettersQueue.shift();
+            //         this.currentLetter.font.color = Color.Blue;
+            //
+            //         setTimeout(() => {
+            //             this.currentLetter.font.color = Color.Yellow;
+            //             this.feedbackLabel.kill();
+            //
+            //         }, 2000);
+            //
+            //         this.feedbackLabel = new Label({
+            //             text: 'Succes!',
+            //             pos: new Vector(680, 520),
+            //             font: new Font({
+            //                 family: "Roboto Mono, monospace",
+            //                 size: 30,
+            //                 color: Color.White
+            //             })
+            //         });
+            //         this.add(this.feedbackLabel)
+            //
+            //         // Move upward by 50 pixels over 2000ms
+            //         this.feedbackLabel.actions.moveBy(new Vector(0, -50), 50)
+            //         // Fade out from full opacity to 0 over 2000ms
+            //         this.feedbackLabel.actions.fade(0, 1000)
+            //
+            //         // Once the animation is complete, remove the label from the scene
+            //     }
+            // });
 
             window.addEventListener('keydown', this.keyDownHandler);
 
