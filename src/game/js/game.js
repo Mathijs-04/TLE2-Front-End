@@ -284,7 +284,7 @@ export class Game extends Engine {
 
 
                 this.feedbackLabel = new Label({
-                    text: 'Goed gedaan!',
+                    text: 'Success!',
                     pos: new Vector(680, 520),
                     font: new Font({
                         family: "Roboto Mono, monospace",
