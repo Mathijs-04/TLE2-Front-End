@@ -182,11 +182,11 @@ function Profile() {
                     </div>
                     <div className="grid grid-cols-2 gap-1">
                         {[
-                            { title: "Snelste Beginner", value: fastestTimes.beginner ? `${fastestTimes.beginner.toFixed(2)}s` : "--:--" },
+                            { title: "Snelste tijd - Beginner", value: fastestTimes.beginner ? `${fastestTimes.beginner.toFixed(2)}s` : "--:--" },
                             { title: "Gemiddelde tijd", value: averageTime ? `${averageTime}s` : "--:--" },
-                            { title: "Snelste Gemiddeld", value: fastestTimes.gemiddeld ? `${fastestTimes.gemiddeld.toFixed(2)}s` : "--:--" },
+                            { title: "Snelste tijd - Gemiddeld", value: fastestTimes.gemiddeld ? `${fastestTimes.gemiddeld.toFixed(2)}s` : "--:--" },
                             { title: "Aantal games", value: gameCount },
-                            { title: "Snelste Gevorderd", value: fastestTimes.gevorderd ? `${fastestTimes.gevorderd.toFixed(2)}s` : "--:--" },
+                            { title: "Snelste tijd - Gevorderd", value: fastestTimes.gevorderd ? `${fastestTimes.gevorderd.toFixed(2)}s` : "--:--" },
                             { title: "Totale speeltijd", value: formatTotalTime(totalPlaytime) },
                         ].map((stat, i) => (
                             <div key={i} className="bg-DuskBlue p-6 rounded-3xl shadow-md text-center text-white">
