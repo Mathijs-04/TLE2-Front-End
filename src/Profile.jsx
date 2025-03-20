@@ -128,7 +128,7 @@ function Profile() {
 
                 {/* Left Side - Recente Games */}
                 <div
-                    className="relative lg:absolute lg:top-8 lg:left-0 bg-SlateBlue text-white p-4 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[25%] mt-14 lg:mt-0">
+                    className="relative lg:absolute lg:top-40 lg:left-0 bg-SlateBlue text-white p-4 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[25%] mt-14 lg:mt-0">
                     <div className="border-b-2 border-Yellow w-28 mb-2">
                         <h2 className="whitespace-nowrap text-lg lg:text-xl font-extrabold">Recente games</h2>
                     </div>
@@ -159,7 +159,7 @@ function Profile() {
                                 {games.length > 0
                                     ? games.map((game, i) => (
                                         <li key={i} className="flex flex-col font-medium border-b pb-1">
-                                                <span className="text-sm">{(game.best_time / 1000).toFixed(2)}s</span>
+                                            <span className="text-sm">{(game.best_time / 1000).toFixed(2)}s</span>
                                             <span className="text-xs text-gray-300">{formatDateTime(game.created_at)}</span>
                                         </li>
                                     ))
@@ -182,11 +182,11 @@ function Profile() {
                     </div>
                     <div className="grid grid-cols-2 gap-1">
                         {[
-                            { title: "Snelste Beginner", value: fastestTimes.beginner ? `${fastestTimes.beginner.toFixed(2)}s` : "--:--" },
-                            { title: "Gemiddelde tijd", value: averageTime ? `${averageTime}s` : "--:--" },
-                            { title: "Snelste Gemiddeld", value: fastestTimes.gemiddeld ? `${fastestTimes.gemiddeld.toFixed(2)}s` : "--:--" },
+                            { title: "Snelste Beginner", value: fastestTimes.beginner && fastestTimes.beginner !== Infinity ? `${fastestTimes.beginner.toFixed(2)}s` : "0" },
+                            { title: "Gemiddelde tijd", value: averageTime ? `${averageTime}s` : "0" },
+                            { title: "Snelste Gemiddeld", value: fastestTimes.gemiddeld && fastestTimes.gemiddeld !== Infinity ? `${fastestTimes.gemiddeld.toFixed(2)}s` : "0" },
                             { title: "Aantal games", value: gameCount },
-                            { title: "Snelste Gevorderd", value: fastestTimes.gevorderd ? `${fastestTimes.gevorderd.toFixed(2)}s` : "--:--" },
+                            { title: "Snelste Gevorderd", value: fastestTimes.gevorderd && fastestTimes.gevorderd !== Infinity ? `${fastestTimes.gevorderd.toFixed(2)}s` : "0" },
                             { title: "Totale speeltijd", value: formatTotalTime(totalPlaytime) },
                         ].map((stat, i) => (
                             <div key={i} className="bg-DuskBlue p-6 rounded-3xl shadow-md text-center text-white">
