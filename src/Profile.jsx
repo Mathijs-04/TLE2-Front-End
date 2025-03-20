@@ -128,7 +128,7 @@ function Profile() {
 
                 {/* Left Side - Recente Games */}
                 <div
-                    className="relative lg:absolute lg:top-40 lg:left-0 bg-SlateBlue text-white p-4 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[25%] mt-14 lg:mt-0">
+                    className="relative lg:absolute lg:top-40 lg:left-0 bg-SlateBlue text-white p-4 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[90%] lg:max-w-[25%] mt-14 lg:mt-0">
                     <div className="border-b-2 border-Yellow w-28 mb-2">
                         <h2 className="whitespace-nowrap text-lg lg:text-xl font-extrabold">Recente games</h2>
                     </div>
