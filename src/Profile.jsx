@@ -128,7 +128,7 @@ function Profile() {
 
                 {/* Left Side - Recente Games */}
                 <div
-                    className="relative lg:absolute lg:top-8 lg:left-0 bg-SlateBlue text-white p-4 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[25%] mt-14 lg:mt-0">
+                    className="relative lg:absolute lg:top-40 lg:left-0 bg-SlateBlue text-white p-4 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg w-full max-w-[90%] lg:max-w-[25%] mt-14 lg:mt-0">
                     <div className="border-b-2 border-Yellow w-28 mb-2">
                         <h2 className="whitespace-nowrap text-lg lg:text-xl font-extrabold">Recente games</h2>
                     </div>
@@ -159,7 +159,7 @@ function Profile() {
                                 {games.length > 0
                                     ? games.map((game, i) => (
                                         <li key={i} className="flex flex-col font-medium border-b pb-1">
-                                                <span className="text-sm">{(game.best_time / 1000).toFixed(2)}s</span>
+                                            <span className="text-sm">{(game.best_time / 1000).toFixed(2)}s</span>
                                             <span className="text-xs text-gray-300">{formatDateTime(game.created_at)}</span>
                                         </li>
                                     ))
