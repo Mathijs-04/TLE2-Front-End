@@ -75,7 +75,18 @@ export class Game extends Engine {
         }
 
 
-        // this.countdown()
+        // label voor loading screen
+        this.loadingLabel = new Label({
+            text: 'Laden...',
+            pos: new Vector(600, 60),
+            font: new Font({
+                size: 32,
+                family: "Roboto Mono, monospace",
+                color: Color.White
+            }),
+            textAlign: TextAlign.Left
+        });
+        this.add(this.loadingLabel);
 
 
 
@@ -120,7 +131,7 @@ export class Game extends Engine {
 
 
             this.timerLabel = new Label({
-                text: `Time: ${this.elapsedTime}s`,
+                text: `Tijd: ${this.elapsedTime}s`,
                 pos: new Vector(50, 20), // Position on screen
                 font: new Font({
                     size: 46,
@@ -341,7 +352,7 @@ export class Game extends Engine {
 
 
 
-        this.timerLabel.text = `Time: ${this.elapsedTime}s`;
+        this.timerLabel.text = `Tijd: ${this.elapsedTime}s`;
         if (this.exampleTimer === this.exampleTimerGoal) {
             this.showExample()
         }
