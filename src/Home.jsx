@@ -12,7 +12,7 @@ function Home() {
         const currentUrl = location.pathname;
         if (token === null) {
             localStorage.setItem("redirectUrl", currentUrl);
-            window.location.href = 'https://cmgt.hr.nl/chat-login/handle/%7Bapplication%7D?redirect=http://localhost/login';
+            window.location.href = 'https://cmgt.hr.nl/chat-login/handle/%7Bapplication%7D?redirect=http://localhost:5174/login';
         }
     }, [navigate]);
 
