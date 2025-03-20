@@ -25,7 +25,6 @@ function GameComponent() {
     const [detectedGesture, setDetectedGesture] = useState(null);
     const [playTime, setPlayTime] = useState(null);
 
-
     // Difficulty-specific information
     const difficultyInfo = {
         beginner: {
@@ -41,7 +40,6 @@ function GameComponent() {
             description: "Dit is de moeilijkste modus. Hierbij krijg je geen hints. Veel succes! Zorg ervoor dat je camera actief is, want de timer begint direct!",
         }
     };
-
 
     const startGame = () => {
         setGameStarted(true);
@@ -115,7 +113,6 @@ function GameComponent() {
         gameRef.current.startTime = Date.now(); // Store game start time
     };
 
-
     const returnToMenu = () => {
         fetchGameData();
 
@@ -134,7 +131,6 @@ function GameComponent() {
 
         navigate('/profile'); // Navigate to profile page
     };
-
 
     useEffect(() => {
         if (gameStarted && difficulty && !gameEnded) {
@@ -233,7 +229,6 @@ function GameComponent() {
                     </div>
                 )}
 
-
                 <canvas
                     ref={canvasRef}
                     width={1280}
@@ -244,7 +239,7 @@ function GameComponent() {
 
                 {gameEnded && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-        bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
+                                    bg-white p-10 w-[90%] max-w-[400px] rounded-2xl shadow-2xl flex flex-col items-center">
                         <h3 className="text-3xl font-bold text-Navy mb-4">Finish!</h3>
                         {playTime &&
                             <p className="text-lg font-semibold text-gray-700 mb-4">Jouw tijd: {playTime} seconden</p>}
@@ -271,5 +266,4 @@ function GameComponent() {
         </>
     );
 }
-
 export default GameComponent;
