@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import { FilesetResolver, HandLandmarker } from "@mediapipe/tasks-vision";
+import React, {useEffect, useRef} from "react";
+import {FilesetResolver, HandLandmarker} from "@mediapipe/tasks-vision";
 import KNear from "./handtracker/knear.js";
 import JSONData1 from "./models/allmoveset_rechts.json";
+import {Color} from "excalibur";
 
-const HandTrackingComponent = ({ onDetect }) => {
+const HandTrackingComponent = ({onDetect}) => {
     const videoRef = useRef(null);
     const handLandmarkerRef = useRef(null);
     const machine = new KNear(1);
     const files = [JSONData1];
     const animationFrameRef = useRef(null);
     const canvasRef = useRef(null);
+
 
     useEffect(() => {
         async function initializeHandTracking() {
@@ -30,29 +32,30 @@ const HandTrackingComponent = ({ onDetect }) => {
         }
 
         function startWebcam() {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                console.log("Starting webcam...");
-                navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-                    if (videoRef.current) {
-                        videoRef.current.srcObject = stream;
-                        videoRef.current.play();
-                        videoRef.current.onloadeddata = () => {
-                            console.log("Webcam started. Loading model...");
-                            setTimeout(() => {
-                                importJSON().then(visualizeHands);
-                            }, 5000);
-                            startRealTimeDetection();
-                        };
-                    }
-                }).catch((error) => {
-                    console.error("Error accessing webcam:", error);
-                });
-            } else {
-                console.error("getUserMedia is not supported in this browser.");
-            }
+            console.log("Starting webcam...");
+            navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.play();
+                    videoRef.current.onloadeddata = () => {
+                        console.log("Webcam started. Loading model...");
+                        setTimeout(() => {
+                            importJSON().then(visualizeHands);
+
+
+                        }, 5000);
+                        startRealTimeDetection();
+                    };
+                }
+            }).catch((error) => {
+                console.error("Error accessing webcam:", error);
+            });
+
         }
 
         async function visualizeHands() {
+
+            // DEBUG Functie kan uit kost volgens mij veel performance
             if (!handLandmarkerRef.current || !videoRef.current || !canvasRef.current) return;
 
             const ctx = canvasRef.current.getContext("2d");
@@ -62,6 +65,7 @@ const HandTrackingComponent = ({ onDetect }) => {
 
             if (results.landmarks.length > 0) {
                 for (let hand of results.landmarks) {
+                    // roept de visualisatie functie aan
                     drawHand(hand, ctx, canvasRef.current);
                 }
             }
@@ -81,22 +85,25 @@ const HandTrackingComponent = ({ onDetect }) => {
                 [5, 9], [9, 13], [13, 17]
             ];
 
+            // Find unique Z values for knuckles
             let zGroups = {};
             landmarks.forEach(p => {
-                let roundedZ = Math.round(p.z * 10) / 10;
+                let roundedZ = Math.round(p.z * 10) / 10; // Round to 1 decimal for grouping
                 if (!zGroups[roundedZ]) {
                     zGroups[roundedZ] = [];
                 }
                 zGroups[roundedZ].push(p);
             });
 
+            // Get sorted Z depth levels (planes)
             let sortedZKeys = Object.keys(zGroups).map(Number).sort((a, b) => a - b);
             let minZ = sortedZKeys[0];
             let maxZ = sortedZKeys[sortedZKeys.length - 1];
 
             function getAlpha(z) {
+                // Assign same alpha for all points in the same depth group
                 let normalizedZ = (z - minZ) / (maxZ - minZ);
-                return Math.max(0.2, 1 - normalizedZ);
+                return Math.max(0.2, 1 - normalizedZ); // At least 20% opacity
             }
 
             let depthAlpha = {};
@@ -107,9 +114,9 @@ const HandTrackingComponent = ({ onDetect }) => {
             connections.forEach(([start, end]) => {
                 let zStart = Math.round(landmarks[start].z * 10) / 10;
                 let zEnd = Math.round(landmarks[end].z * 10) / 10;
-                let alpha = (depthAlpha[zStart] + depthAlpha[zEnd]) / 2;
+                let alpha = (depthAlpha[zStart] + depthAlpha[zEnd]) / 2; // Average of the two depths
 
-                ctx.strokeStyle = `rgba(245, 245, 220, ${alpha})`;
+                ctx.strokeStyle = `rgba(245, 245, 220, ${alpha})`; // Beige lines with transparency
                 ctx.lineWidth = 15;
                 ctx.beginPath();
                 ctx.moveTo(landmarks[start].x * canvas.width, landmarks[start].y * canvas.height);
@@ -121,13 +128,14 @@ const HandTrackingComponent = ({ onDetect }) => {
                 let zGroup = Math.round(point.z * 10) / 10;
                 let alpha = depthAlpha[zGroup];
 
-                ctx.fillStyle = `rgba(128, 128, 128, ${alpha})`;
-                ctx.lineWidth = 10;
+                ctx.fillStyle = `rgba(128, 128, 128, ${alpha})`; // Gray circles with transparency
+                ctx.lineWidth = 10
                 ctx.beginPath();
                 ctx.arc(point.x * canvas.width, point.y * canvas.height, 5, 0, Math.PI * 2);
                 ctx.fill();
             });
         }
+
 
         async function importJSON() {
             if (files.length > 0) {
@@ -152,6 +160,7 @@ const HandTrackingComponent = ({ onDetect }) => {
             if (!handLandmarkerRef.current || !videoRef.current) return;
 
             const results = await handLandmarkerRef.current.detectForVideo(videoRef.current, performance.now());
+            // Optionally, add a check to ensure that the detection result is valid.
             if (!results || !results.landmarks || results.landmarks.length === 0) {
                 animationFrameRef.current = requestAnimationFrame(processFrame);
                 return;
@@ -171,6 +180,7 @@ const HandTrackingComponent = ({ onDetect }) => {
             if (detectArray.length > 0) {
                 const flattenedData = detectArray.flat();
                 const result = machine.findNearest(flattenedData, 2);
+                // console.log(result);
                 if (onDetect) onDetect(result);
             }
 
@@ -180,6 +190,7 @@ const HandTrackingComponent = ({ onDetect }) => {
                 }, 200);
             });
             return processFrame();
+
         }
 
         async function startRealTimeDetection() {
@@ -201,9 +212,26 @@ const HandTrackingComponent = ({ onDetect }) => {
     }, []);
 
     return (
-        <div style={{ position: 'absolute', paddingTop: '520px', marginRight: '850px' }}>
-            <video ref={videoRef} style={{ transform: "scaleX(-1)", display: 'none' }} autoPlay></video>
-            <canvas ref={canvasRef} style={{ transform: "scaleX(-1)", display: "fixed", bottom: "500px" }}></canvas>
+        <div style={{
+            position: 'absolute',
+            paddingTop: '520px',
+            marginRight: '850px'
+
+
+        }}>
+            <video ref={videoRef} style={{
+                transform: "scaleX(-1)",
+                display: 'none'
+            }} autoPlay>
+            </video>
+            <canvas
+                ref={canvasRef}
+                style={{
+                    transform: "scaleX(-1)",
+                    display: "fixed",
+                    bottom: "500px",
+                }}
+            ></canvas>
         </div>
     );
 };
